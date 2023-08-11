@@ -1,17 +1,24 @@
 package com.example.saywhonow_backend;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Lineup {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(optional=false)
     private Festival festival;
     private Date date;
-    private List<Artist> artists = new ArrayList<>();
+    // private List<Artist> artists = new ArrayList<>();
     
     public Long getId() {
         return id;
@@ -37,11 +44,11 @@ public class Lineup {
         this.date = date;
     }
     
-    public List<Artist> getArtists() {
-        return artists;
-    }
+    // public List<Artist> getArtists() {
+    //     return artists;
+    // }
     
-    public void setArtists(List<Artist> artists) {
-        this.artists = artists;
-    }
+    // public void setArtists(List<Artist> artists) {
+    //     this.artists = artists;
+    //}
 }

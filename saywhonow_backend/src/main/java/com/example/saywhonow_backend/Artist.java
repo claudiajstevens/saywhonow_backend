@@ -3,14 +3,19 @@ package com.example.saywhonow_backend;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="artists")
 public class Artist {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private List<Festival> festivals;
+    // private List<Festival> festivals;
     private List<String> genres;
 
     public Long getId() {
@@ -28,13 +33,13 @@ public class Artist {
         this.name = name;
     }
 
-    public List<Festival> getFestivals() {
-        return festivals;
-    }
+    // public List<Festival> getFestivals() {
+    //     return festivals;
+    // }
 
-    public void setFestivals(List<Festival> festivals) {
-        this.festivals = festivals;
-    }
+    // public void setFestivals(List<Festival> festivals) {
+    //     this.festivals = festivals;
+    // }
 
     public List<String> getGenres() {
         return genres;
