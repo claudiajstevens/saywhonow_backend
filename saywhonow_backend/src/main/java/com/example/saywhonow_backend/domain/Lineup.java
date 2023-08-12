@@ -1,4 +1,4 @@
-package com.example.saywhonow_backend;
+package com.example.saywhonow_backend.domain;
 
 //import java.util.ArrayList;
 import java.util.Date;
