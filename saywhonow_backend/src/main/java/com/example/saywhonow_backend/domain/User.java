@@ -29,8 +29,8 @@ public class User implements UserDetails {
     @Column(name="user_id")
     private long userId;
 
+    @Column(unique=true)
     private String username;
-    
     private String password;
 
     @ManyToMany(fetch=FetchType.EAGER)
@@ -131,9 +131,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setAuthorities(List<Authority> authorities) {
-        this.authorities = authorities;
-    }
 
     public static Object withDefaultPasswordEncoder() {
         return null;

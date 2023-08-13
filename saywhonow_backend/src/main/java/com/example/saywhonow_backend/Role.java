@@ -57,13 +57,13 @@ public class Role implements GrantedAuthority {
         this.roleId = roleId;
     }
 
-    // public User getUser() {
-    //     return user;
-    // }
+    public User getUser() {
+        return user;
+    }
 
-    // public void setUser(User user) {
-    //     this.user = user;
-    // }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 
 }
