@@ -1,11 +1,12 @@
 package com.example.saywhonow_backend.repository;
 
-import com.example.saywhonow_backend.Role;
-import com.google.common.base.Optional;
+import java.util.Optional;
+
+import com.example.saywhonow_backend.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+//import org.springframework.stereotype.Repository;
 
 
-@Respositoy
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Integer> {
     Optional<Role> findByAuthority(String authority);
 }

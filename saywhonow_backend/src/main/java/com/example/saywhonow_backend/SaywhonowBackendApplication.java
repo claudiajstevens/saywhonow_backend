@@ -3,21 +3,23 @@ package com.example.saywhonow_backend;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.example.saywhonow_backend.domain.User;
-import com.example.saywhonow_backend.repository.RoleRepository;
-import com.example.saywhonow_backend.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.saywhonow_backend.models.Role;
+import com.example.saywhonow_backend.models.User;
+import com.example.saywhonow_backend.repository.RoleRepository;
+import com.example.saywhonow_backend.repository.UserRepository;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
+// @RestController
 public class SaywhonowBackendApplication {
 
 	public static void main(String[] args) {
@@ -25,7 +27,7 @@ public class SaywhonowBackendApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder){
+	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncode){
 		return args -> {
 			if(roleRepository.findByAuthority("ADMIN").isPresent()) return;
 
@@ -35,7 +37,7 @@ public class SaywhonowBackendApplication {
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
 			
-			User admin = new User(1L, "admin", passwordEncoder.encode("password"), roles);
+			User admin = new User(1, "admin", passwordEncode.encode("pass"), roles);
 
 			userRepository.save(admin);
 		};

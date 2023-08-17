@@ -10,6 +10,7 @@ public class RegistrationDTO {
     }
 
     public RegistrationDTO(String username, String password) {
+        super();
         this.username = username;
         this.password = password;
     }

@@ -1,12 +1,12 @@
-package com.example.saywhonow_backend.domain;
+package com.example.saywhonow_backend.models;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import com.example.saywhonow_backend.Role;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,19 +17,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 @Entity
 @Table(name="users")
 public class User implements UserDetails {
 
     @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id")
-    private long userId;
-
-    @Column(unique=true)
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    // @Column(name="user_id")
+    private Integer userId;
+        @Column(unique=true)
     private String username;
     private String password;
 
@@ -43,10 +41,10 @@ public class User implements UserDetails {
 
     public User(){
         super();
-        this.authorities = new HashSet<Role>();
+        this.authorities = new HashSet<>();
     }
 
-    public User(Long userId, String username, String password, Set<Role> authorities){
+    public User(Integer userId, String username, String password, Set<Role> authorities){
         super();
         this.userId = userId;
         this.username = username;
@@ -55,21 +53,32 @@ public class User implements UserDetails {
     }
 
     // private List<Festival> festivals = new ArrayList<>();
-    private List<String> genres = new ArrayList<>();
+    // private List<String> genres = new ArrayList<>();
     // private List<Artist> artists = new ArrayList<>();
     // private List<Authority> authorities = new ArrayList<>();
 
-    public long getId() {
-        return userId;
+    public Integer getUserId() {
+        return this.userId;
     }
 
-    public void setId(long id) {
-        this.userId = id;
+    public void setId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public void setAuthorites(Set<Role> authorities){
+        this.authorities = authorities;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // TODO Auto-generated method stub
+        return this.authorities;
     }
 
     @Override
     public String getUsername() {
-        return username;
+        // TODO Auto-generated method stub
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -78,7 +87,8 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        // TODO Auto-generated method stub
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -93,22 +103,14 @@ public class User implements UserDetails {
     //     this.festivals = festivals;
     // }
 
-    public List<String> getGenres() {
-        return genres;
-    }
+    // public List<String> getGenres() {
+    //     return genres;
+    // }
 
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
-    }
+    // public void setGenres(List<String> genres) {
+    //     this.genres = genres;
+    // }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
-    }
-
-    public void setAuthorites(Set<Role> authorities){
-        this.authorities = authorities;
-    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -132,9 +134,9 @@ public class User implements UserDetails {
     }
 
 
-    public static Object withDefaultPasswordEncoder() {
-        return null;
-    }
+    // public static Object withDefaultPasswordEncoder() {
+    //     return null;
+    // }
 
 
     // public List<Artist> getArtists() {
