@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -76,7 +77,11 @@ public class AuthenticationService {
 
         } catch(AuthenticationException e){
             // TODO: handle exception
-            return new LoginResponseDTO(null, "");
+            System.out.println(e);
+            throw new BadCredentialsException("Incorrect username or password", e);
+        
+            
+            //return new LoginResponseDTO(null, "");
         }
     
     }

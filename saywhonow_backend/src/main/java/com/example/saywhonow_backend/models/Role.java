@@ -14,18 +14,11 @@ import jakarta.persistence.Table;
 public class Role implements GrantedAuthority {
     //TODO set up many to many instead of 1 to many
 
-
     @Id 
     @GeneratedValue(strategy=GenerationType.AUTO )
     @Column(name="role_id")
     private Integer roleId;
-
-
     private String authority;
-    // @ManyToOne(optional = false)
-    // private User user;
-
-
 
     public Role(){
         super();

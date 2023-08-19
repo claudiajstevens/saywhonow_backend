@@ -62,11 +62,18 @@ public class SecurityConfiguration {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
+                auth.requestMatchers("/", "/home").permitAll();
                 auth.requestMatchers("/auth/**").permitAll();
                 auth.requestMatchers("/admin/**").hasRole("ADMIN");
                 auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();
+                // auth.anyRequest().permitAll();
             });
+            // .formLogin(form -> form
+            //         .loginPage("/login")
+            //         .permitAll()
+            // )
+            // .logout(logout -> logout.permitAll());
 
         http.oauth2ResourceServer( oauth ->
             oauth.jwt(jwt -> jwt
@@ -104,10 +111,3 @@ public class SecurityConfiguration {
     }
     
 }
-
-
-// .oauth2ResourceServer((oauth2 -> oauth2
-//                 .jwt(jwt -> jwt
-//                     .decoder(jwtDecoder())
-//                 )
-//             ))

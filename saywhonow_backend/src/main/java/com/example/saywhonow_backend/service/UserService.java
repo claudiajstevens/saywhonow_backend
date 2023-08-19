@@ -18,9 +18,6 @@ import com.example.saywhonow_backend.repository.UserRepository;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    private PasswordEncoder encoder;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Override
@@ -29,7 +26,7 @@ public class UserService implements UserDetailsService {
 
         // this will call database and try to find user in there
         return userRepository.findByUsername(username)
-            .orElseThrow( () -> new UsernameNotFoundException("user is not valid"));
+            .orElseThrow( () -> new UsernameNotFoundException("Invalid credentials"));
 
     }
     
