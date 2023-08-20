@@ -1,80 +1,94 @@
-// package com.example.saywhonow_backend.domain;
+package com.example.saywhonow_backend.domain;
 
-// import java.util.ArrayList;
-// import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.GeneratedValue;
-// import jakarta.persistence.GenerationType;
-// import jakarta.persistence.Id;
-// import jakarta.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
-// @Entity
-// @Table(name="festivals")
-// public class Festival {
+@Entity
+@Table(name="festivals")
+public class Festival {
     
-//     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
-//     private String name;
-//     private String location;
-//     // private List<Lineup> lineup = new ArrayList<>();
-//     private List<String> genres = new ArrayList<>();
-//     private int length;
-//     private boolean camping;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String name;
+    private String location;
+    // private List<Lineup> lineup = new ArrayList<>();
+    private List<String> genres = new ArrayList<>();
+    
+    @Transient
+    private int length;
+    private boolean camping;
 
-//     public Long getId() {
-//         return id;
-//     }
+    public Festival(){
+        super();
+    }
 
-//     public void setId(Long id) {
-//         this.id = id;
-//     }
+    public Festival(Integer id, String name, String location){
+        super();
+        this.id = id;
+        this.name = name;
+        this.location = location;
+    }
 
-//     public String getName() {
-//         return name;
-//     }
+    public Integer getId() {
+        return id;
+    }
 
-//     public void setName(String name) {
-//         this.name = name;
-//     }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-//     public String getLocation() {
-//         return location;
-//     }
+    public String getName() {
+        return name;
+    }
 
-//     public void setLocation(String location) {
-//         this.location = location;
-//     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-//     // public List<Lineup> getLineup() {
-//     //     return lineup;
-//     // }
+    public String getLocation() {
+        return location;
+    }
 
-//     // public void setLineup(List<Lineup> lineup) {
-//     //     this.lineup = lineup;
-//     // }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-//     public List<String> getGenres() {
-//         return genres;
-//     }
+    // public List<Lineup> getLineup() {
+    //     return lineup;
+    // }
 
-//     public void setGenres(List<String> genres) {
-//         this.genres = genres;
-//     }
+    // public void setLineup(List<Lineup> lineup) {
+    //     this.lineup = lineup;
+    // }
 
-//     public int getLength() {
-//         return length;
-//     }
+    public List<String> getGenres() {
+        return genres;
+    }
 
-//     public void setLength(int length) {
-//         this.length = length;
-//     }
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+    }
 
-//     public boolean isCamping() {
-//         return camping;
-//     }
+    public int getLength() {
+        return length;
+    }
 
-//     public void setCamping(boolean camping) {
-//         this.camping = camping;
-//     }
-// }
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public boolean isCamping() {
+        return camping;
+    }
+
+    public void setCamping(boolean camping) {
+        this.camping = camping;
+    }
+}

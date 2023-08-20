@@ -22,7 +22,7 @@ public class AuthenticationController {
     // using registration DTO to transfer data from the request into our backend to register user
     @PostMapping("/register")
     public User registerUser(@RequestBody RegistrationDTO body) {
-        return authenticationService.registerUser(body.getUsername(), body.getPassword());
+        return authenticationService.registerUser(body.getUsername(), body.getPassword(), body.getEmail());
     }
 
     @PostMapping("/login")

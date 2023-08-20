@@ -3,7 +3,7 @@ package com.example.saywhonow_backend.models;
 public class RegistrationDTO {
     private String username;
     private String password;
-
+    private String email;
 
     public RegistrationDTO() {
         super();
@@ -31,7 +31,15 @@ public class RegistrationDTO {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String toString(){
-        return "Registration info: username " + this.username + " password: " + this.password;
+        return "Registration info: username " + this.username + " password: " + this.password + " email: " + this.email;
     }
 }

@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -27,9 +28,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy=GenerationType.AUTO)
     // @Column(name="user_id")
     private Integer userId;
-        @Column(unique=true)
+        
+    @Column(unique=true)
+    @NotNull
     private String username;
+
+    @NotNull
     private String password;
+    
+    @NotNull
+    private String email;
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
@@ -44,11 +52,12 @@ public class User implements UserDetails {
         this.authorities = new HashSet<>();
     }
 
-    public User(Integer userId, String username, String password, Set<Role> authorities){
+    public User(Integer userId, String username, String password, String email, Set<Role> authorities){
         super();
         this.userId = userId;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.authorities = authorities;
     }
 
@@ -95,6 +104,8 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    
+
     // public List<Festival> getFestivals() {
     //     return festivals;
     // }
@@ -131,6 +142,22 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
     }
 
 

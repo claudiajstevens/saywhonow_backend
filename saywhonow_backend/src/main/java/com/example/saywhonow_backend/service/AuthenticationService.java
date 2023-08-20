@@ -43,7 +43,8 @@ public class AuthenticationService {
 
     // TODO: create user dto to pass user info over instead of passing over authenticated password
     // or over password in User class put "@JSONIgnore"
-    public User registerUser(String username, String password){
+    // TODO: make sure that user must have username, password, and valid email
+    public User registerUser(String username, String password, String email){
 
         // take password and make sure it is encoded before putting on database
         // user passwordEncoder with encode method this will give us encoded password
@@ -54,7 +55,7 @@ public class AuthenticationService {
 
         authorities.add(userRole);
         
-        return userRepository.save(new User(0, username, encodedPassword, authorities));
+        return userRepository.save(new User(0, username, encodedPassword, email, authorities));
     }
 
     // the authenticationManager will look for username and password and make sure they are valid
