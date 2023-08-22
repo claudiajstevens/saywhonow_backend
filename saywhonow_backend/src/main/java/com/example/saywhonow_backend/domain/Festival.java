@@ -3,6 +3,7 @@ package com.example.saywhonow_backend.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,24 +17,39 @@ public class Festival {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @CsvBindByName(column = "name")
     private String name;
-    private String location;
+
+    @CsvBindByName(column = "country")
+    private String country;
+
+    @CsvBindByName(column = "state")
+    private String state;
+
+    @CsvBindByName(column = "city")
+    private String city;
+    
+    private List<String> locations;
+    private List<Integer> years;
     // private List<Lineup> lineup = new ArrayList<>();
     private List<String> genres = new ArrayList<>();
     
     @Transient
     private int length;
-    private boolean camping;
 
     public Festival(){
         super();
     }
 
-    public Festival(Integer id, String name, String location){
+    public Festival(Integer id, String name, String city, String state, String country){
         super();
         this.id = id;
         this.name = name;
-        this.location = location;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.locations.add(String.join(", ", city, state, country));
     }
 
     public Integer getId() {
@@ -52,12 +68,12 @@ public class Festival {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public List<String> getLocations() {
+        return this.locations;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocations(String location) {
+        this.locations.add(location);
     }
 
     // public List<Lineup> getLineup() {
@@ -84,11 +100,46 @@ public class Festival {
         this.length = length;
     }
 
-    public boolean isCamping() {
-        return camping;
+    public void addYear(Integer year){
+        this.years.add(year);
     }
 
-    public void setCamping(boolean camping) {
-        this.camping = camping;
+    public String getCountry() {
+        return country;
     }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setLocations(List<String> locations) {
+        this.locations = locations;
+    }
+
+    public List<Integer> getYears() {
+        return years;
+    }
+
+    public void setYears(List<Integer> years) {
+        this.years = years;
+    }
+
+    
+
 }

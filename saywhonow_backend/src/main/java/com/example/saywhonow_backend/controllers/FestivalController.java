@@ -1,6 +1,7 @@
 package com.example.saywhonow_backend.controllers;
 
 import java.util.List;
+import java.io.IOException;
 import java.util.Date;
 
 import com.example.saywhonow_backend.domain.Festival;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/festivals")
@@ -32,8 +34,23 @@ public class FestivalController {
     }
 
     @PostMapping("/add")
-    public Festival registerNewFestival(String festivalName, String location){
-        return festivalService.addNewFestival(festivalName, location);
+    public Festival registerNewFestival(String festivalName, String city, String state, String country){
+        return festivalService.addNewFestival(festivalName, city, state, country);
+    }
+
+    @PostMapping("/import-festivals")
+    public String importFestivals(@RequestParam("csvFile") MultipartFile csvFile){
+        try {
+            List<Festival> festivals = festivalService.readFestivalsFromCSV(csvFile);
+
+            // saving the festivals to the database
+            festivalService.saveFestivals(festivals);
+
+            return "Festivals imported successfully";
+        } catch (IOException e){
+            e.printStackTrace();
+            return "Error importing festivals: " + e.getMessage();
+        }
     }
 
     @DeleteMapping(path = "{festivalId}")
@@ -41,11 +58,12 @@ public class FestivalController {
         festivalService.deleteFestival(festivalId);
     }
 
-    @PutMapping(path = "{festivalName}")
-    public void updateFestival(
-        @PathVariable("festivalName") String festivalName,
-        @RequestParam(required = false) String location
-    ){
-        festivalService.updateFestival(festivalName, location);
-    }
+
+    // @PutMapping(path = "{festivalName}")
+    // public void updateFestival(
+    //     @PathVariable("festivalName") String festivalName,
+    //     @RequestParam(required = false) String location
+    // ){
+    //     festivalService.updateFestival(festivalName, location);
+    // }
 }

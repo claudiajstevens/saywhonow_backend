@@ -64,9 +64,10 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/", "/home").permitAll();
                 auth.requestMatchers("/auth/**").permitAll();
+                auth.requestMatchers("/festivals").permitAll();
+                auth.requestMatchers("/festivals/**").permitAll();
                 auth.requestMatchers("/admin/**").hasRole("ADMIN");
                 auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
-                auth.requestMatchers("/festivals/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();
                 // auth.anyRequest().permitAll();
             });
