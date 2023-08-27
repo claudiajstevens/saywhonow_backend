@@ -54,7 +54,7 @@ public class FestivalController {
     }
 
     @DeleteMapping(path = "{festivalId}")
-    public void deleteStudent(@PathVariable("festivalId") Integer festivalId){
+    public void deleteFestival(@PathVariable("festivalId") Integer festivalId){
         festivalService.deleteFestival(festivalId);
     }
 
