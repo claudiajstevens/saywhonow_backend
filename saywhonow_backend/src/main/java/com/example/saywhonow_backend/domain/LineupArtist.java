@@ -24,8 +24,9 @@ public class LineupArtist {
         super();
     }
 
-    public LineupArtist(String artist){
+    public LineupArtist(Integer id, String artist){
         super();
+        this.id = id;
         this.artistName = artist;
     }
 
