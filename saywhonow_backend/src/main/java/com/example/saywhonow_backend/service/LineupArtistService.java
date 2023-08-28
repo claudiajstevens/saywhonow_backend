@@ -62,9 +62,9 @@ public class LineupArtistService {
     }
 
     @Transactional
-    public void updateLineupArtist(String artist, Date day, String stage){
-        LineupArtist lineupArtist = lineupArtistRepository.findByName(artist)
-            .orElseThrow( () -> new IllegalStateException("Lineup artist with name: " + artist + " does not exist")
+    public void updateLineupArtist(Integer id, Date day, String stage){
+        LineupArtist lineupArtist = lineupArtistRepository.findById(id)
+            .orElseThrow( () -> new IllegalStateException("Lineup artist with id: " + id + " does not exist")
             );
 
         if(day != null ){

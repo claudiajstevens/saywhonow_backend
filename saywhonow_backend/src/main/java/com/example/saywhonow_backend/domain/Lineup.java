@@ -1,26 +1,43 @@
 package com.example.saywhonow_backend.domain;
 
+import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.opencsv.bean.CsvBindByName;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 // import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Lineup {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // @ManyToOne(optional=false)
+    // @CsvBindByName(column = "festival")
+    @ManyToOne  //(optional=false)
+    @JoinColumn(name = "festival_id")
     private Festival festival;
-    private List<LineupArtist> artists;
+
+    @OneToMany(mappedBy = "lineup", cascade = CascadeType.ALL)
+    @CsvBindByName(column = "artists")
+    private List<LineupArtist> artists = new ArrayList<>();
+
+    @CsvBindByName(column = "startDate")
     private Date startDate;
+
+    @CsvBindByName(column = "endDate")
     private Date endDate;
+
     private boolean camping;
     // private List<Artist> artists = new ArrayList<>();
     

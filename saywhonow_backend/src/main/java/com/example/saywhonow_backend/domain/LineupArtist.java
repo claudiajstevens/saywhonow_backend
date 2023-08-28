@@ -6,13 +6,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class LineupArtist {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name = "artist_id")
     private Artist artist;
+
+    @ManyToOne
+    @JoinColumn(name = "lineup_id")
+    private Lineup lineup;
+
     private String artistName;
     private Date startTime;
     private Date endTime;
@@ -93,5 +102,15 @@ public class LineupArtist {
     public void setStage(String stage) {
         this.stage = stage;
     }
+
+    public Lineup getLineup() {
+        return lineup;
+    }
+
+    public void setLineup(Lineup lineup) {
+        this.lineup = lineup;
+    }
     
+    
+
 }

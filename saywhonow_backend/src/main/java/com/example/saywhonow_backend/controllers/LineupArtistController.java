@@ -52,10 +52,10 @@ public class LineupArtistController {
 
     @PutMapping(path = "{lineupArtistName}")
     public void updateLineupArtist(
-        @PathVariable("lineupArtistName") String lineupArtist,
+        @PathVariable("lineupArtistId") Integer lineupArtistId,
         @RequestParam(required = false) Date day,
         @RequestParam(required = false) String stage
     ){
-        lineupArtistService.updateLineupArtist(lineupArtist, day, stage);
+        lineupArtistService.updateLineupArtist(lineupArtistId, day, stage);
     }
 }

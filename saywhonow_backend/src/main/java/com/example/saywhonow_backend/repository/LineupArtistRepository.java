@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LineupArtistRepository extends JpaRepository<LineupArtist, Integer> {
-    Optional<LineupArtist> findByName(String name);
+    Optional<LineupArtist> findByArtistName(String artistName);
 
     Optional<LineupArtist> findById(Integer id);
 
