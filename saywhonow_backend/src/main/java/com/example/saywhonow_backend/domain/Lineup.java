@@ -6,8 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,27 +26,36 @@ public class Lineup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // @CsvBindByName(column = "festival")
-    @ManyToOne  //(optional=false)
+    @CsvBindByName(column = "festival")
+    @ManyToOne(fetch = FetchType.LAZY)  //(optional=false)
     @JoinColumn(name = "festival_id")
     private Festival festival;
 
+    // @CsvBindByName(column = "artists")
     @OneToMany(mappedBy = "lineup", cascade = CascadeType.ALL)
-    @CsvBindByName(column = "artists")
     private List<LineupArtist> artists = new ArrayList<>();
 
+    @CsvDate(value = "YYYY-MM-DD")
     @CsvBindByName(column = "startDate")
     private Date startDate;
 
+    @CsvDate(value = "YYYY-MM-DD")
     @CsvBindByName(column = "endDate")
     private Date endDate;
 
+    @Nullable
     private boolean camping;
     // private List<Artist> artists = new ArrayList<>();
     
 
     public Lineup(){
         super();
+    }
+
+    public Lineup(Integer id, Date start, Date end){
+        this.id = id;
+        this.startDate = start;
+        this.endDate = end;
     }
 
     public Lineup(Integer id, Festival festival){

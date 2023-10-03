@@ -19,8 +19,8 @@ public class Artist {
     private Integer id;
     private String name;
 
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
-    private List<LineupArtist> lineupArtists = new ArrayList<>();
+    // @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
+    // private List<LineupArtist> lineupArtists = new ArrayList<>();
     // private List<Festival> festivals;
     private List<String> genres;
 
@@ -67,13 +67,13 @@ public class Artist {
         this.genres = genres;
     }
 
-    public List<LineupArtist> getLineupArtists() {
-        return lineupArtists;
-    }
+    // public List<LineupArtist> getLineupArtists() {
+    //     return lineupArtists;
+    // }
 
-    public void setLineupArtists(List<LineupArtist> lineupArtists) {
-        this.lineupArtists = lineupArtists;
-    }
+    // public void setLineupArtists(List<LineupArtist> lineupArtists) {
+    //     this.lineupArtists = lineupArtists;
+    // }
 
     
 }

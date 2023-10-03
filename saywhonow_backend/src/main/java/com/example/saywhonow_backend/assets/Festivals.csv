@@ -1,18 +1,18 @@
-name,city,state,country
-Life is Beautiful,Las Vegas,Nevada,United States
-Electric Daisy Carnival,Las Vegas,Nevada,United States
-Coachella,Indio,California,United States
-Outside Lands,San Fransisco,California,United States
-Hard Summer,Los Angeles,California,United States
-Bottlerock,Napa Valley,California,United States
-Day Trip,Los Angeles,California,United States
-Splash House,Palm Springs,California,United States
-Lightning in a Bottle,Kern County,California, United States
-Nocturnal Wonderland,San Bernadino,California, United States
-Beyond Wonderland SoCal,San Bernadino,California, United States
-Lucidity,Santa Barbara,California,United States
-Portola,San Francisco,California,United States
-Austin City Limits,Austin,Texas,United States
-Lollapalooza,Chicago,Illinois,United States
-Electric Forest,Rothbury,Michigan,United States
-Ultra,Miami,Florida,United States
+name,city,state,country,monthHeld
+Life is Beautiful,Las Vegas,Nevada,United States,September
+Electric Daisy Carnival,Las Vegas,Nevada,United States,May
+Coachella,Indio,California,United States,April
+Outside Lands,San Fransisco,California,United States,August
+Hard Summer,Los Angeles,California,United States,August
+Bottlerock,Napa Valley,California,United States,May
+Day Trip,Los Angeles,California,United States,June
+Splash House,Palm Springs,California,United States,August
+Lightning in a Bottle,Kern County,California, United States,May
+Nocturnal Wonderland,San Bernadino,California, United States,September
+Beyond Wonderland SoCal,San Bernadino,California, United States,March
+Lucidity,Santa Barbara,California,United States,April
+Portola,San Francisco,California,United States,October
+Austin City Limits,Austin,Texas,United States,October
+Lollapalooza,Chicago,Illinois,United States,August
+Electric Forest,Rothbury,Michigan,United States,June
+Ultra,Miami,Florida,United States,March

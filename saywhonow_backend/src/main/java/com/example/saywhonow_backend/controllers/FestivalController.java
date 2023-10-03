@@ -1,6 +1,7 @@
 package com.example.saywhonow_backend.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import java.io.IOException;
 import java.util.Date;
 
@@ -34,8 +35,8 @@ public class FestivalController {
     }
 
     @PostMapping("/add")
-    public Festival registerNewFestival(String festivalName, String city, String state, String country){
-        return festivalService.addNewFestival(festivalName, city, state, country);
+    public Festival registerNewFestival(String festivalName, String city, String state, String country, String monthHeld){
+        return festivalService.addNewFestival(festivalName, city, state, country, monthHeld);
     }
 
     @PostMapping("/import-festivals")
@@ -51,6 +52,12 @@ public class FestivalController {
             e.printStackTrace();
             return "Error importing festivals: " + e.getMessage();
         }
+    }
+
+    @GetMapping(path = "/{festivalId}")
+    public Festival getFestival(@PathVariable("festivalId") Integer festivalId){
+        System.out.println("In festival service");
+        return festivalService.getFestivalById(festivalId);
     }
 
     @DeleteMapping(path = "{festivalId}")

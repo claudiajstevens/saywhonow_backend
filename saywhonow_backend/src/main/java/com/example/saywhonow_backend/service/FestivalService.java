@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,9 +46,18 @@ public class FestivalService {
         return festivalRepository.findAll();
     }
 
+    public Festival getFestivalById(Integer id){
+        System.out.println("In the festivals service");
+
+        // this will call database and try to find user in there
+        return festivalRepository.findById(id)
+            .orElseThrow( () -> new IllegalStateException("Invalid credentials"));
+
+    }
+    
     // TODO: make sure this has all feilds we want to add in
-    public Festival addNewFestival(String festival, String city, String state, String country){
-        return festivalRepository.save(new Festival(0, festival, city, state, country));
+    public Festival addNewFestival(String festival, String city, String state, String country, String monthHeld){
+        return festivalRepository.save(new Festival(0, festival, city, state, country, monthHeld));
     }
 
     public void saveFestivals(List<Festival> festivals){

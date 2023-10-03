@@ -66,6 +66,8 @@ public class SecurityConfiguration {
                 auth.requestMatchers("/auth/**").permitAll();
                 auth.requestMatchers("/festivals").permitAll();
                 auth.requestMatchers("/festivals/**").permitAll();
+                auth.requestMatchers("/lineup").permitAll();
+                auth.requestMatchers("/lineup/**").permitAll();
                 auth.requestMatchers("/admin/**").hasRole("ADMIN");
                 auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();

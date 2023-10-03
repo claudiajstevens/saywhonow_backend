@@ -2,12 +2,15 @@ package com.example.saywhonow_backend.domain;
 
 import java.util.Date;
 
+import com.opencsv.bean.CsvBindByName;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class LineupArtist {
@@ -18,14 +21,18 @@ public class LineupArtist {
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
-    @ManyToOne
-    @JoinColumn(name = "lineup_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lineup_id", referencedColumnName = "id")
     private Lineup lineup;
 
+    @CsvBindByName(column = "artist_name")
     private String artistName;
+
     private Date startTime;
     private Date endTime;
     private Date date;
+
+    @CsvBindByName(column = "day")
     private String day;
     private String stage;
 

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface ArtistRepository extends JpaRepository<Artist, Integer>{
-        Optional<Artist> findByName(String name);
+    Optional<Artist> findByName(String name);
 
     Optional<Artist> findById(Integer id);
 

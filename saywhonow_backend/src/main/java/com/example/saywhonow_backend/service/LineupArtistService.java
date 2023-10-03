@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import com.example.saywhonow_backend.domain.LineupArtist;
 import com.example.saywhonow_backend.repository.LineupArtistRepository;

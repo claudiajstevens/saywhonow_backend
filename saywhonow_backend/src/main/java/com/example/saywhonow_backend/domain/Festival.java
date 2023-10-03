@@ -1,6 +1,7 @@
 package com.example.saywhonow_backend.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.opencsv.bean.CsvBindByName;
@@ -34,7 +35,10 @@ public class Festival {
 
     @CsvBindByName(column = "city")
     private String city;
-    
+
+    @CsvBindByName(column = "monthHeld")
+    private String monthHeld;
+
     private List<String> locations;
     private List<Integer> years;
 
@@ -50,13 +54,14 @@ public class Festival {
         super();
     }
 
-    public Festival(Integer id, String name, String city, String state, String country){
+    public Festival(Integer id, String name, String city, String state, String country, String monthHeld){
         super();
         this.id = id;
         this.name = name;
         this.city = city;
         this.state = state;
         this.country = country;
+        this.monthHeld = monthHeld;
         this.locations.add(String.join(", ", city, state, country));
     }
 
@@ -130,6 +135,14 @@ public class Festival {
 
     public String getCity() {
         return city;
+    }
+
+    public String getMonthHeld() {
+        return monthHeld;
+    }
+
+    public void setMonthHeld(String monthHeld) {
+        this.monthHeld = monthHeld;
     }
 
     public void setCity(String city) {
