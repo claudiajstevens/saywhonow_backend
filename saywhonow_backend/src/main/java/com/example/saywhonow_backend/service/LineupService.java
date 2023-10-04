@@ -96,4 +96,8 @@ public class LineupService {
         lineupRepository.saveAll(lineups);
 
     }
+
+    public List<Lineup> getLineupsFromFestival(Integer festivalId) {        
+        return lineupRepository.findByFestivalId(festivalId);
+    }
 }

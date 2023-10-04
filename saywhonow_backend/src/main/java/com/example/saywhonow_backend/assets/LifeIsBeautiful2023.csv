@@ -1,75 +1,73 @@
-lineup_artist, day
-The Killers, Friday
-Flume, Friday
-Yeah Yeah Yeahs, Friday
-BLXST, Friday
-Bebe Rexha, Friday
-Vintage Culture, Friday
-Dayglow, Friday
-Goth Babe, Friday
-Inhaler, Friday
-The Wombats, Friday
-Raye, Friday
-Franc Moody, Friday
-Anna Lunoe, Friday
-Beach Weather, Friday
-Slayyyter, Friday
-William Black, Friday
-Roosevelt, Friday
-Mindchatter, Friday
-Telykast, Friday
-Almost Monday, Friday
-Ewan Mcvicar, Friday
-Lewis Thompson, Friday
-Snacktime, Friday
-Dance System, Friday
-Kendrick Lamar, Saturday
-The 1975, Saturday
-Omar Apollo, Saturday
-Cigarettes After Sex, Saturday
-Madeon, Saturday
-Ferg, Saturday
-Purple Disco Machine, Saturday
-Yung Gravy, Saturday
-Renee Rapp, Saturday
-Ben Bohmer, Saturday
-Amber Mark, Saturday
-The Rose, Saturday
-Blond:ish, Saturday
-Tsha, Saturday
-Chika, Saturday
-Jawny, Saturday
-Barry Can't Swim, Saturday
-JockStrap, Saturday
-Vandelux, Saturday
-Charlotte Sands, Saturday
-Honeyluv, Saturday
-Joy (Anonymous), Saturday
-Coco & Breezy, Saturday
-Matt Hansen, Saturday
-Ayybo, Saturday
-Night Tales, Saturday
-Prentiss, Saturday
-Odesza, Sunday
-Khalid, Sunday
-Nelly, Sunday
-Kim Petras, Sunday
-John Summit, Sunday
-Rina Sawayama, Sunday
-Claptone, Sunday
-Cannons, Sunday
-Baby Tate, Sunday
-Snakehips, Sunday
-Jessie Murph, Sunday
-Babytron, Sunday
-J. Worra, Sunday
-Wilderado, Sunday
-Biig Piig, Sunday
-Miya Folick, Sunday
-Talk, Sunday
-Two Another, Sunday
-Salute, Sunday
-Winston Surfshirt, Sunday
-Highway, Sunday
-Rockie Brown, Sunday
-Lema, Sunday
+lineupArtist, day, stage
+The Killers, Friday, Downtown
+Flume, Friday, JBL
+Yeah Yeah Yeahs, Friday, Downtown
+BLXST, Friday, Fremont
+Bebe Rexha, Friday, JBL
+Vintage Culture, Friday, Fremont
+Dayglow, Friday, Downtown
+Goth Babe, Friday, Rolling Stone
+Inhaler, Friday, Downtown
+The Wombats, Friday, Rolling Stone
+Raye, Friday, JBL
+Franc Moody, Friday, JBL
+Anna Lunoe, Friday, Fremont
+Beach Weather, Friday, Downtown
+Slayyyter, Friday, Rolling Stone
+William Black, Friday, Fremont
+Roosevelt, Friday, Rolling Stone
+Mindchatter, Friday, Fremont
+Telykast, Friday, Fremont
+Almost Monday, Friday, Downtown
+Ewan Mcvicar, Friday, Mantis
+Lewis Thompson, Friday, Fremont
+Snacktime, Friday, JBL
+Kendrick Lamar, Saturday, Downtown
+The 1975, Saturday, JBL
+Omar Apollo, Saturday, Downtown
+Cigarettes After Sex, Saturday, JBL
+Madeon, Saturday, Fremont
+Ferg, Saturday, Downtown
+Purple Disco Machine, Saturday, Rolling Stone
+Yung Gravy, Saturday, JBL
+Renee Rapp, Saturday, Rolling Stone
+Ben Bohmer, Saturday, Fremont
+Amber Mark, Saturday, Downtown
+The Rose, Saturday, JBL
+Blond:ish, Saturday, Fremont
+Tsha, Saturday, Fremont
+Chika, Saturday, Downtown
+Jawny, Saturday, Rolling Stone
+Barry Can't Swim, Saturday, Fremont
+JockStrap, Saturday, JBL
+Vandelux, Saturday, Rolling Strong
+Charlotte Sands, Saturday, JBL
+Honeyluv, Saturday, Fremont
+Joy (Anonymous), Saturday, Fremont
+Coco & Breezy, Saturday, Mantis
+Matt Hansen, Saturday, Downtown
+Ayybo, Saturday, Mantis
+Night Tales, Saturday, Fremont
+Prentiss, Saturday, Rolling Stone
+Odesza, Sunday, Downtown
+Khalid, Sunday, JBL
+Nelly, Sunday, Downtown
+Kim Petras, Sunday, JBL
+John Summit, Sunday, Downtown
+Rina Sawayama, Sunday, JBL
+Claptone, Sunday, Fremont
+Cannons, Sunday, Downtown
+Baby Tate, Sunday, Rolling Stone
+Snakehips, Sunday, Fremont
+Jessie Murph, Sunday, JBL
+Babytron, Sunday, Fremont
+J. Worra, Sunday, Fremont
+Wilderado, Sunday, Downtown 
+Miya Folick, Sunday, Rolling Stone
+Talk, Sunday, JBL
+Two Another, Sunday, Fremont
+Salute, Sunday, Fremont
+Winston Surfshirt, Sunday, Downtown
+Highway, Sunday, JBL
+Rockie Brown, Sunday, Rolling Stone
+Lema, Sunday, Fremont

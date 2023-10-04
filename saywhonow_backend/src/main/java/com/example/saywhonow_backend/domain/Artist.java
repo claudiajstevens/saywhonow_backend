@@ -3,8 +3,10 @@ package com.example.saywhonow_backend.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,16 +19,25 @@ public class Artist {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
 
-    // @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
-    // private List<LineupArtist> lineupArtists = new ArrayList<>();
-    // private List<Festival> festivals;
+    @OneToMany(mappedBy = "artist", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<LineupArtist> lineupArtists = new ArrayList<>();
+    
     private List<String> genres;
 
     public Artist(){
         super();
     }
+
+    
+
+    public Artist(String name) {
+        this.name = name;
+    }
+
 
     public Artist(Integer artistId, String name){
         super();
@@ -49,15 +60,6 @@ public class Artist {
         this.name = name;
     }
 
-    // public List<Festival> getFestivals() {
-    //     return festivals;
-    // }
-
-    // public void addFestivals(Festival festival) {
-    //     if( !this.festivals.contains(festival)){
-    //         this.festivals.add(festival);
-    //     }
-    // }
 
     public List<String> getGenres() {
         return genres;
@@ -67,13 +69,13 @@ public class Artist {
         this.genres = genres;
     }
 
-    // public List<LineupArtist> getLineupArtists() {
-    //     return lineupArtists;
-    // }
+    public List<LineupArtist> getLineupArtists() {
+        return lineupArtists;
+    }
 
-    // public void setLineupArtists(List<LineupArtist> lineupArtists) {
-    //     this.lineupArtists = lineupArtists;
-    // }
+    public void setLineupArtists(List<LineupArtist> lineupArtists) {
+        this.lineupArtists = lineupArtists;
+    }
 
     
 }

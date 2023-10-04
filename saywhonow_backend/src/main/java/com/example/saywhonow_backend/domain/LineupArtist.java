@@ -2,9 +2,12 @@ package com.example.saywhonow_backend.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,12 +20,14 @@ public class LineupArtist {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id")
+    @JsonIgnore
     private Artist artist;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lineup_id", referencedColumnName = "id")
+    @JsonIgnore
     private Lineup lineup;
 
     @CsvBindByName(column = "artist_name")
@@ -30,10 +35,14 @@ public class LineupArtist {
 
     private Date startTime;
     private Date endTime;
+
     private Date date;
 
     @CsvBindByName(column = "day")
+    @Column(name="day")
     private String day;
+
+    @Column(name="stage")
     private String stage;
 
     public LineupArtist(){

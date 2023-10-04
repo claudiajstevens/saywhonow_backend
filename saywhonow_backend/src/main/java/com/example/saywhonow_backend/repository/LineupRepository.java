@@ -13,4 +13,6 @@ public interface LineupRepository extends JpaRepository<Lineup, Integer> {
     Optional<Lineup> findById(Integer id);
 
     Lineup findByFestival(String festival);
+
+    List<Lineup> findByFestivalId(Integer festivalId);
 }

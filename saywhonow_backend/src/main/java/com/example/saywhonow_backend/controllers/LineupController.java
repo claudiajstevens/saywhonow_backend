@@ -43,6 +43,13 @@ public class LineupController {
         return lineupService.getAllLineups();
     }
 
+    @GetMapping(path = "/{festivalId}")
+    public List<Lineup> getLineupsByFestival(@PathVariable("festivalId") Integer festivalId ){
+        System.out.println("In lineup controller /{festivalId}");
+        System.out.println(festivalId);
+        return lineupService.getLineupsFromFestival(festivalId);
+    }
+
     @PostMapping("/add")
     public Lineup registerNewLineup(Festival festival, Date start, Date end){
         return lineupService.addNewLineup(festival, start, end);
@@ -51,10 +58,10 @@ public class LineupController {
     @PostMapping("/import-lineups")
     public String importLineups(@RequestBody List<FestivalLineupDTO> festivalLineupDTO){
         System.out.println("In Lineup Controller /import-lineups");
-        for( FestivalLineupDTO lineupDTO : festivalLineupDTO){
-            System.out.println(lineupDTO.toString());
-        }
-        System.out.println(festivalLineupDTO);
+        // for( FestivalLineupDTO lineupDTO : festivalLineupDTO){
+        //     System.out.println(lineupDTO.toString());
+        // }
+        // System.out.println(festivalLineupDTO);
         try{
             lineupService.importFestivalLineups(festivalLineupDTO);
             return "Festival lineups uploaded successfully";

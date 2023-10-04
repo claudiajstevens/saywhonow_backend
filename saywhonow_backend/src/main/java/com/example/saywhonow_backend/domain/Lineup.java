@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import jakarta.annotation.Nullable;
+import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +22,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 
 @Entity
 public class Lineup {
@@ -29,19 +36,22 @@ public class Lineup {
     @CsvBindByName(column = "festival")
     @ManyToOne(fetch = FetchType.LAZY)  //(optional=false)
     @JoinColumn(name = "festival_id")
+    @JsonIgnore
     private Festival festival;
 
     // @CsvBindByName(column = "artists")
     @OneToMany(mappedBy = "lineup", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<LineupArtist> artists = new ArrayList<>();
 
-    @CsvDate(value = "YYYY-MM-DD")
-    @CsvBindByName(column = "startDate")
-    private Date startDate;
+    @Column(name = "start_date", columnDefinition = "DATE")
+    @Temporal(value=TemporalType.DATE)
+    private java.util.Date startDate;
 
-    @CsvDate(value = "YYYY-MM-DD")
     @CsvBindByName(column = "endDate")
-    private Date endDate;
+    @Column(name="end_date", columnDefinition = "DATE")
+    @Temporal(TemporalType.DATE)
+    private java.util.Date endDate;
 
     @Nullable
     private boolean camping;

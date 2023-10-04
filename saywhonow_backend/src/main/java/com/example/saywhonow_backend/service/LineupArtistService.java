@@ -4,16 +4,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.example.saywhonow_backend.domain.Artist;
+import com.example.saywhonow_backend.domain.Lineup;
 import com.example.saywhonow_backend.domain.LineupArtist;
+import com.example.saywhonow_backend.models.LineupArtistDTO;
+import com.example.saywhonow_backend.repository.ArtistRepository;
 import com.example.saywhonow_backend.repository.LineupArtistRepository;
+import com.example.saywhonow_backend.repository.LineupRepository;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import jakarta.transaction.Transactional;
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +30,12 @@ public class LineupArtistService {
     
     @Autowired
     private LineupArtistRepository lineupArtistRepository;
+
+    @Autowired
+    private ArtistRepository artistRepository;
+
+    @Autowired
+    private LineupRepository lineupRepository;
 
     @Autowired
     public LineupArtistService(LineupArtistRepository lineupArtistRepository){
@@ -76,5 +89,43 @@ public class LineupArtistService {
             lineupArtist.setStage(stage);
         }
 
+    }
+
+    public void importLineupArtists(List<LineupArtistDTO> lineupArtistDTOs, Integer lineupId) {
+        List<LineupArtist> lineupArtists = new ArrayList<>();
+        Lineup lineup = lineupRepository.findById(lineupId).orElseThrow( () -> new NullPointerException("Lineup does not exist"));
+
+        for( LineupArtistDTO lineupArtistDTO : lineupArtistDTOs) {
+            System.out.println(lineupArtistDTO);
+            LineupArtist lineupArtist = new LineupArtist();
+            lineupArtist.setArtistName(lineupArtistDTO.getLineupArtist());
+            System.out.println(lineupArtistDTO.getDay());
+            System.out.println(lineupArtist.getDay());
+            lineupArtist.setDay(lineupArtistDTO.getDay());
+            lineupArtist.setStage(lineupArtistDTO.getStage());
+
+            lineupArtist.setLineup(lineup);
+
+            // Search for Artist to Connect to lineupArtist
+            String name = lineupArtistDTO.getLineupArtist();
+            Artist artist = artistRepository.findArtistByName(name);
+
+            // if artist does not exist add it to database
+            if (artist == null ){
+                Artist newArtist = new Artist(name);
+                artist = artistRepository.save(newArtist);
+            }
+            
+            // connect artist to lineup artist
+            lineupArtist.setArtist(artist);
+
+            lineupArtists.add(lineupArtist);
+        }
+
+        lineupArtistRepository.saveAll(lineupArtists);
+    }
+
+    public List<LineupArtist> getLineupArtistInFestivalYear(Integer lineupId) {
+        return lineupArtistRepository.findByLineupId(lineupId);
     }
 }

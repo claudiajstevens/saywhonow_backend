@@ -14,4 +14,6 @@ public interface ArtistRepository extends JpaRepository<Artist, Integer>{
 
     Optional<Artist> findById(Integer id);
 
+    Artist findArtistByName(String lineupArtist);
+
 }

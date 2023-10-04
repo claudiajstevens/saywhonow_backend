@@ -68,6 +68,8 @@ public class SecurityConfiguration {
                 auth.requestMatchers("/festivals/**").permitAll();
                 auth.requestMatchers("/lineup").permitAll();
                 auth.requestMatchers("/lineup/**").permitAll();
+                auth.requestMatchers("/lineupArtist").permitAll();
+                auth.requestMatchers("/lineupArtist/**").permitAll();
                 auth.requestMatchers("/admin/**").hasRole("ADMIN");
                 auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();

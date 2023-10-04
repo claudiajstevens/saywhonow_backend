@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.opencsv.bean.CsvBindByName;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
@@ -42,7 +43,8 @@ public class Festival {
     private List<String> locations;
     private List<Integer> years;
 
-    @OneToMany(mappedBy = "festival", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "festival", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Lineup> lineup = new ArrayList<>();
 
     private List<String> genres = new ArrayList<>();
