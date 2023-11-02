@@ -8,6 +8,7 @@
 		<version>3.0.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	<packaging>jar</packaging>
 	<groupId>com.example</groupId>
 	<artifactId>saywhonow_backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -61,12 +62,13 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
-		<dependency>
+		<!-- <dependency>
 		<groupId>com.github.eirslett</groupId>
 		<artifactId>frontend-maven-plugin</artifactId>
 		<version>1.6</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
+
 
 	<build>
 		<plugins>

@@ -50,6 +50,11 @@ public class LineupController {
         return lineupService.getLineupsFromFestival(festivalId);
     }
 
+    @GetMapping(path = "/upcoming-lineups")
+    public List<Lineup> getUpcomingLineups() {
+        return lineupService.getUpcomingLineups();
+    }
+
     @PostMapping("/add")
     public Lineup registerNewLineup(Festival festival, Date start, Date end){
         return lineupService.addNewLineup(festival, start, end);
@@ -76,4 +81,3 @@ public class LineupController {
         lineupService.deleteLineup(lineupId);
     }
 }
-

@@ -1,0 +1,651 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.2
+-- Dumped by pg_dump version 15.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: artists; Type: TABLE; Schema: public; Owner: claud
+--
+
+CREATE TABLE public.artists (
+    id integer NOT NULL,
+    genres character varying(255)[],
+    name character varying(255)
+);
+
+
+ALTER TABLE public.artists OWNER TO claud;
+
+--
+-- Name: artists_id_seq; Type: SEQUENCE; Schema: public; Owner: claud
+--
+
+CREATE SEQUENCE public.artists_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.artists_id_seq OWNER TO claud;
+
+--
+-- Name: artists_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: claud
+--
+
+ALTER SEQUENCE public.artists_id_seq OWNED BY public.artists.id;
+
+
+--
+-- Name: festivals; Type: TABLE; Schema: public; Owner: claud
+--
+
+CREATE TABLE public.festivals (
+    id integer NOT NULL,
+    city character varying(255),
+    country character varying(255),
+    genres character varying(255)[],
+    locations character varying(255)[],
+    month_held character varying(255),
+    name character varying(255),
+    state character varying(255),
+    years integer[]
+);
+
+
+ALTER TABLE public.festivals OWNER TO claud;
+
+--
+-- Name: festivals_id_seq; Type: SEQUENCE; Schema: public; Owner: claud
+--
+
+CREATE SEQUENCE public.festivals_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.festivals_id_seq OWNER TO claud;
+
+--
+-- Name: festivals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: claud
+--
+
+ALTER SEQUENCE public.festivals_id_seq OWNED BY public.festivals.id;
+
+
+--
+-- Name: lineup; Type: TABLE; Schema: public; Owner: claud
+--
+
+CREATE TABLE public.lineup (
+    id integer NOT NULL,
+    camping boolean NOT NULL,
+    end_date date,
+    start_date date,
+    festival_id integer
+);
+
+
+ALTER TABLE public.lineup OWNER TO claud;
+
+--
+-- Name: lineup_artist; Type: TABLE; Schema: public; Owner: claud
+--
+
+CREATE TABLE public.lineup_artist (
+    id integer NOT NULL,
+    artist_name character varying(255),
+    date timestamp(6) without time zone,
+    day character varying(255),
+    end_time timestamp(6) without time zone,
+    stage character varying(255),
+    start_time timestamp(6) without time zone,
+    artist_id integer,
+    lineup_id integer
+);
+
+
+ALTER TABLE public.lineup_artist OWNER TO claud;
+
+--
+-- Name: lineup_artist_id_seq; Type: SEQUENCE; Schema: public; Owner: claud
+--
+
+CREATE SEQUENCE public.lineup_artist_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.lineup_artist_id_seq OWNER TO claud;
+
+--
+-- Name: lineup_artist_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: claud
+--
+
+ALTER SEQUENCE public.lineup_artist_id_seq OWNED BY public.lineup_artist.id;
+
+
+--
+-- Name: lineup_id_seq; Type: SEQUENCE; Schema: public; Owner: claud
+--
+
+CREATE SEQUENCE public.lineup_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.lineup_id_seq OWNER TO claud;
+
+--
+-- Name: lineup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: claud
+--
+
+ALTER SEQUENCE public.lineup_id_seq OWNED BY public.lineup.id;
+
+
+--
+-- Name: roles; Type: TABLE; Schema: public; Owner: claud
+--
+
+CREATE TABLE public.roles (
+    role_id integer NOT NULL,
+    authority character varying(255)
+);
+
+
+ALTER TABLE public.roles OWNER TO claud;
+
+--
+-- Name: roles_seq; Type: SEQUENCE; Schema: public; Owner: claud
+--
+
+CREATE SEQUENCE public.roles_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.roles_seq OWNER TO claud;
+
+--
+-- Name: user_role_junction; Type: TABLE; Schema: public; Owner: claud
+--
+
+CREATE TABLE public.user_role_junction (
+    user_id integer NOT NULL,
+    role_id integer NOT NULL
+);
+
+
+ALTER TABLE public.user_role_junction OWNER TO claud;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: claud
+--
+
+CREATE TABLE public.users (
+    user_id integer NOT NULL,
+    email character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    username character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO claud;
+
+--
+-- Name: users_seq; Type: SEQUENCE; Schema: public; Owner: claud
+--
+
+CREATE SEQUENCE public.users_seq
+    START WITH 1
+    INCREMENT BY 50
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_seq OWNER TO claud;
+
+--
+-- Name: artists id; Type: DEFAULT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.artists ALTER COLUMN id SET DEFAULT nextval('public.artists_id_seq'::regclass);
+
+
+--
+-- Name: festivals id; Type: DEFAULT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.festivals ALTER COLUMN id SET DEFAULT nextval('public.festivals_id_seq'::regclass);
+
+
+--
+-- Name: lineup id; Type: DEFAULT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.lineup ALTER COLUMN id SET DEFAULT nextval('public.lineup_id_seq'::regclass);
+
+
+--
+-- Name: lineup_artist id; Type: DEFAULT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.lineup_artist ALTER COLUMN id SET DEFAULT nextval('public.lineup_artist_id_seq'::regclass);
+
+
+--
+-- Data for Name: artists; Type: TABLE DATA; Schema: public; Owner: claud
+--
+
+COPY public.artists (id, genres, name) FROM stdin;
+1	\N	The Killers
+2	\N	Flume
+3	\N	Yeah Yeah Yeahs
+4	\N	BLXST
+5	\N	Bebe Rexha
+6	\N	Vintage Culture
+7	\N	Dayglow
+8	\N	Goth Babe
+9	\N	Inhaler
+10	\N	The Wombats
+11	\N	Raye
+12	\N	Franc Moody
+13	\N	Anna Lunoe
+14	\N	Beach Weather
+15	\N	Slayyyter
+16	\N	William Black
+17	\N	Roosevelt
+18	\N	Mindchatter
+19	\N	Telykast
+20	\N	Almost Monday
+21	\N	Ewan Mcvicar
+22	\N	Lewis Thompson
+23	\N	Snacktime
+24	\N	Kendrick Lamar
+25	\N	The 1975
+26	\N	Omar Apollo
+27	\N	Cigarettes After Sex
+28	\N	Madeon
+29	\N	Ferg
+30	\N	Purple Disco Machine
+31	\N	Yung Gravy
+32	\N	Renee Rapp
+33	\N	Ben Bohmer
+34	\N	Amber Mark
+35	\N	The Rose
+36	\N	Blond:ish
+37	\N	Tsha
+38	\N	Chika
+39	\N	Jawny
+40	\N	Barry Can't Swim
+41	\N	JockStrap
+42	\N	Vandelux
+43	\N	Charlotte Sands
+44	\N	Honeyluv
+45	\N	Joy (Anonymous)
+46	\N	Coco & Breezy
+47	\N	Matt Hansen
+48	\N	Ayybo
+49	\N	Night Tales
+50	\N	Prentiss
+51	\N	Odesza
+52	\N	Khalid
+53	\N	Nelly
+54	\N	Kim Petras
+55	\N	John Summit
+56	\N	Rina Sawayama
+57	\N	Claptone
+58	\N	Cannons
+59	\N	Baby Tate
+60	\N	Snakehips
+61	\N	Jessie Murph
+62	\N	Babytron
+63	\N	J. Worra
+64	\N	Wilderado
+65	\N	Miya Folick
+66	\N	Talk
+67	\N	Two Another
+68	\N	Salute
+69	\N	Winston Surfshirt
+70	\N	Highway
+71	\N	Rockie Brown
+72	\N	Lema
+\.
+
+
+--
+-- Data for Name: festivals; Type: TABLE DATA; Schema: public; Owner: claud
+--
+
+COPY public.festivals (id, city, country, genres, locations, month_held, name, state, years) FROM stdin;
+1	Las Vegas	United States	{}	\N	September	Life is Beautiful	Nevada	\N
+2	Las Vegas	United States	{}	\N	May	Electric Daisy Carnival	Nevada	\N
+3	Indio	United States	{}	\N	April	Coachella	California	\N
+4	San Fransisco	United States	{}	\N	August	Outside Lands	California	\N
+5	Los Angeles	United States	{}	\N	August	Hard Summer	California	\N
+6	Napa Valley	United States	{}	\N	May	Bottlerock	California	\N
+7	Los Angeles	United States	{}	\N	June	Day Trip	California	\N
+8	Palm Springs	United States	{}	\N	August	Splash House	California	\N
+9	Kern County	 United States	{}	\N	May	Lightning in a Bottle	California	\N
+10	San Bernadino	 United States	{}	\N	September	Nocturnal Wonderland	California	\N
+11	San Bernadino	 United States	{}	\N	March	Beyond Wonderland SoCal	California	\N
+12	Santa Barbara	United States	{}	\N	April	Lucidity	California	\N
+13	San Francisco	United States	{}	\N	October	Portola	California	\N
+14	Austin	United States	{}	\N	October	Austin City Limits	Texas	\N
+15	Chicago	United States	{}	\N	August	Lollapalooza	Illinois	\N
+16	Rothbury	United States	{}	\N	June	Electric Forest	Michigan	\N
+17	Miami	United States	{}	\N	March	Ultra	Florida	\N
+\.
+
+
+--
+-- Data for Name: lineup; Type: TABLE DATA; Schema: public; Owner: claud
+--
+
+COPY public.lineup (id, camping, end_date, start_date, festival_id) FROM stdin;
+1	f	2023-09-23	2023-09-21	1
+2	f	2022-09-17	2022-09-15	1
+3	f	2022-07-08	2021-09-16	1
+4	f	2019-09-21	2019-09-19	1
+5	f	2018-09-22	2018-09-20	1
+6	f	2017-09-23	2017-09-21	1
+7	f	2016-09-24	2016-09-22	1
+8	f	2015-09-26	2015-09-24	1
+9	f	2014-10-25	2014-10-23	1
+10	f	2013-10-26	2013-10-25	1
+\.
+
+
+--
+-- Data for Name: lineup_artist; Type: TABLE DATA; Schema: public; Owner: claud
+--
+
+COPY public.lineup_artist (id, artist_name, date, day, end_time, stage, start_time, artist_id, lineup_id) FROM stdin;
+217	The Killers	\N	Friday	\N	Downtown	\N	1	1
+218	Flume	\N	Friday	\N	JBL	\N	2	1
+219	Yeah Yeah Yeahs	\N	Friday	\N	Downtown	\N	3	1
+220	BLXST	\N	Friday	\N	Fremont	\N	4	1
+221	Bebe Rexha	\N	Friday	\N	JBL	\N	5	1
+222	Vintage Culture	\N	Friday	\N	Fremont	\N	6	1
+223	Dayglow	\N	Friday	\N	Downtown	\N	7	1
+224	Goth Babe	\N	Friday	\N	Rolling Stone	\N	8	1
+225	Inhaler	\N	Friday	\N	Downtown	\N	9	1
+226	The Wombats	\N	Friday	\N	Rolling Stone	\N	10	1
+227	Raye	\N	Friday	\N	JBL	\N	11	1
+228	Franc Moody	\N	Friday	\N	JBL	\N	12	1
+229	Anna Lunoe	\N	Friday	\N	Fremont	\N	13	1
+230	Beach Weather	\N	Friday	\N	Downtown	\N	14	1
+231	Slayyyter	\N	Friday	\N	Rolling Stone	\N	15	1
+232	William Black	\N	Friday	\N	Fremont	\N	16	1
+233	Roosevelt	\N	Friday	\N	Rolling Stone	\N	17	1
+234	Mindchatter	\N	Friday	\N	Fremont	\N	18	1
+235	Telykast	\N	Friday	\N	Fremont	\N	19	1
+236	Almost Monday	\N	Friday	\N	Downtown	\N	20	1
+237	Ewan Mcvicar	\N	Friday	\N	Mantis	\N	21	1
+238	Lewis Thompson	\N	Friday	\N	Fremont	\N	22	1
+239	Snacktime	\N	Friday	\N	JBL	\N	23	1
+240	Kendrick Lamar	\N	Saturday	\N	Downtown	\N	24	1
+241	The 1975	\N	Saturday	\N	JBL	\N	25	1
+242	Omar Apollo	\N	Saturday	\N	Downtown	\N	26	1
+243	Cigarettes After Sex	\N	Saturday	\N	JBL	\N	27	1
+244	Madeon	\N	Saturday	\N	Fremont	\N	28	1
+245	Ferg	\N	Saturday	\N	Downtown	\N	29	1
+246	Purple Disco Machine	\N	Saturday	\N	Rolling Stone	\N	30	1
+247	Yung Gravy	\N	Saturday	\N	JBL	\N	31	1
+248	Renee Rapp	\N	Saturday	\N	Rolling Stone	\N	32	1
+249	Ben Bohmer	\N	Saturday	\N	Fremont	\N	33	1
+250	Amber Mark	\N	Saturday	\N	Downtown	\N	34	1
+251	The Rose	\N	Saturday	\N	JBL	\N	35	1
+252	Blond:ish	\N	Saturday	\N	Fremont	\N	36	1
+253	Tsha	\N	Saturday	\N	Fremont	\N	37	1
+254	Chika	\N	Saturday	\N	Downtown	\N	38	1
+255	Jawny	\N	Saturday	\N	Rolling Stone	\N	39	1
+256	Barry Can't Swim	\N	Saturday	\N	Fremont	\N	40	1
+257	JockStrap	\N	Saturday	\N	JBL	\N	41	1
+258	Vandelux	\N	Saturday	\N	Rolling Strong	\N	42	1
+259	Charlotte Sands	\N	Saturday	\N	JBL	\N	43	1
+260	Honeyluv	\N	Saturday	\N	Fremont	\N	44	1
+261	Joy (Anonymous)	\N	Saturday	\N	Fremont	\N	45	1
+262	Coco & Breezy	\N	Saturday	\N	Mantis	\N	46	1
+263	Matt Hansen	\N	Saturday	\N	Downtown	\N	47	1
+264	Ayybo	\N	Saturday	\N	Mantis	\N	48	1
+265	Night Tales	\N	Saturday	\N	Fremont	\N	49	1
+266	Prentiss	\N	Saturday	\N	Rolling Stone	\N	50	1
+267	Odesza	\N	Sunday	\N	Downtown	\N	51	1
+268	Khalid	\N	Sunday	\N	JBL	\N	52	1
+269	Nelly	\N	Sunday	\N	Downtown	\N	53	1
+270	Kim Petras	\N	Sunday	\N	JBL	\N	54	1
+271	John Summit	\N	Sunday	\N	Downtown	\N	55	1
+272	Rina Sawayama	\N	Sunday	\N	JBL	\N	56	1
+273	Claptone	\N	Sunday	\N	Fremont	\N	57	1
+274	Cannons	\N	Sunday	\N	Downtown	\N	58	1
+275	Baby Tate	\N	Sunday	\N	Rolling Stone	\N	59	1
+276	Snakehips	\N	Sunday	\N	Fremont	\N	60	1
+277	Jessie Murph	\N	Sunday	\N	JBL	\N	61	1
+278	Babytron	\N	Sunday	\N	Fremont	\N	62	1
+279	J. Worra	\N	Sunday	\N	Fremont	\N	63	1
+280	Wilderado	\N	Sunday	\N	Downtown 	\N	64	1
+281	Miya Folick	\N	Sunday	\N	Rolling Stone	\N	65	1
+282	Talk	\N	Sunday	\N	JBL	\N	66	1
+283	Two Another	\N	Sunday	\N	Fremont	\N	67	1
+284	Salute	\N	Sunday	\N	Fremont	\N	68	1
+285	Winston Surfshirt	\N	Sunday	\N	Downtown	\N	69	1
+286	Highway	\N	Sunday	\N	 JBL	\N	70	1
+287	Rockie Brown	\N	Sunday	\N	Rolling Stone	\N	71	1
+288	Lema	\N	Sunday	\N	Fremont	\N	72	1
+\.
+
+
+--
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: claud
+--
+
+COPY public.roles (role_id, authority) FROM stdin;
+1	ADMIN
+2	USER
+\.
+
+
+--
+-- Data for Name: user_role_junction; Type: TABLE DATA; Schema: public; Owner: claud
+--
+
+COPY public.user_role_junction (user_id, role_id) FROM stdin;
+1	1
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: claud
+--
+
+COPY public.users (user_id, email, password, username) FROM stdin;
+1	email	$2a$10$QIzfoJW3QJzOvozwXxN5Z.5430fy2NpI/PLqdTaibRbXBZle/UERi	admin
+\.
+
+
+--
+-- Name: artists_id_seq; Type: SEQUENCE SET; Schema: public; Owner: claud
+--
+
+SELECT pg_catalog.setval('public.artists_id_seq', 72, true);
+
+
+--
+-- Name: festivals_id_seq; Type: SEQUENCE SET; Schema: public; Owner: claud
+--
+
+SELECT pg_catalog.setval('public.festivals_id_seq', 17, true);
+
+
+--
+-- Name: lineup_artist_id_seq; Type: SEQUENCE SET; Schema: public; Owner: claud
+--
+
+SELECT pg_catalog.setval('public.lineup_artist_id_seq', 288, true);
+
+
+--
+-- Name: lineup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: claud
+--
+
+SELECT pg_catalog.setval('public.lineup_id_seq', 10, true);
+
+
+--
+-- Name: roles_seq; Type: SEQUENCE SET; Schema: public; Owner: claud
+--
+
+SELECT pg_catalog.setval('public.roles_seq', 51, true);
+
+
+--
+-- Name: users_seq; Type: SEQUENCE SET; Schema: public; Owner: claud
+--
+
+SELECT pg_catalog.setval('public.users_seq', 1, true);
+
+
+--
+-- Name: artists artists_pkey; Type: CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.artists
+    ADD CONSTRAINT artists_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: festivals festivals_pkey; Type: CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.festivals
+    ADD CONSTRAINT festivals_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lineup_artist lineup_artist_pkey; Type: CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.lineup_artist
+    ADD CONSTRAINT lineup_artist_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lineup lineup_pkey; Type: CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.lineup
+    ADD CONSTRAINT lineup_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (role_id);
+
+
+--
+-- Name: users uk_r43af9ap4edm43mmtq01oddj6; Type: CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT uk_r43af9ap4edm43mmtq01oddj6 UNIQUE (username);
+
+
+--
+-- Name: user_role_junction user_role_junction_pkey; Type: CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.user_role_junction
+    ADD CONSTRAINT user_role_junction_pkey PRIMARY KEY (user_id, role_id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: user_role_junction fk5aqfsa7i8mxrr51gtbpcvp0v1; Type: FK CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.user_role_junction
+    ADD CONSTRAINT fk5aqfsa7i8mxrr51gtbpcvp0v1 FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+
+
+--
+-- Name: lineup_artist fk6aipgkcnlbu4u40ij9aqum9ou; Type: FK CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.lineup_artist
+    ADD CONSTRAINT fk6aipgkcnlbu4u40ij9aqum9ou FOREIGN KEY (artist_id) REFERENCES public.artists(id);
+
+
+--
+-- Name: lineup fkg444s0ivv8s0jemuvgsqnxtw0; Type: FK CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.lineup
+    ADD CONSTRAINT fkg444s0ivv8s0jemuvgsqnxtw0 FOREIGN KEY (festival_id) REFERENCES public.festivals(id);
+
+
+--
+-- Name: user_role_junction fkhybpcwvq8snjhbxawo25hxous; Type: FK CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.user_role_junction
+    ADD CONSTRAINT fkhybpcwvq8snjhbxawo25hxous FOREIGN KEY (role_id) REFERENCES public.roles(role_id);
+
+
+--
+-- Name: lineup_artist fkk5hr688sdru23mtldm0lb6hj6; Type: FK CONSTRAINT; Schema: public; Owner: claud
+--
+
+ALTER TABLE ONLY public.lineup_artist
+    ADD CONSTRAINT fkk5hr688sdru23mtldm0lb6hj6 FOREIGN KEY (lineup_id) REFERENCES public.lineup(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

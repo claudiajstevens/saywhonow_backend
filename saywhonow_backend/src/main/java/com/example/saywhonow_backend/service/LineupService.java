@@ -100,4 +100,8 @@ public class LineupService {
     public List<Lineup> getLineupsFromFestival(Integer festivalId) {        
         return lineupRepository.findByFestivalId(festivalId);
     }
+
+    public List<Lineup> getUpcomingLineups() {
+        return lineupRepository.findUpcomingLineups();
+    }
 }
