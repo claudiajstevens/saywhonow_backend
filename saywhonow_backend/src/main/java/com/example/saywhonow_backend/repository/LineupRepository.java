@@ -17,6 +17,6 @@ public interface LineupRepository extends JpaRepository<Lineup, Integer> {
 
     List<Lineup> findByFestivalId(Integer festivalId);
 
-    @Query("SELECT l FROM Lineup l WHERE 1.endDate >= CURRENT_DATE")
+    @Query("SELECT l FROM Lineup l WHERE l.endDate >= CURRENT_DATE")
     List<Lineup> findUpcomingLineups();
 }
