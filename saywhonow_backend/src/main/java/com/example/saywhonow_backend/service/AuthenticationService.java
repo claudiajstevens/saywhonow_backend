@@ -14,7 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.saywhonow_backend.models.User;
+import com.example.saywhonow_backend.exceptions.EmailExistsException;
+import com.example.saywhonow_backend.exceptions.UsernameExistsException;
 import com.example.saywhonow_backend.models.LoginResponseDTO;
+import com.example.saywhonow_backend.models.RegistrationDTO;
 import com.example.saywhonow_backend.models.Role;
 import com.example.saywhonow_backend.repository.RoleRepository;
 import com.example.saywhonow_backend.repository.UserRepository;
@@ -44,18 +47,35 @@ public class AuthenticationService {
     // TODO: create user dto to pass user info over instead of passing over authenticated password
     // or over password in User class put "@JSONIgnore"
     // TODO: make sure that user must have username, password, and valid email
-    public User registerUser(String username, String password, String email){
+    public void registerUser(RegistrationDTO userDTO){
 
+        if (usernameExists(userDTO.getUsername())) {
+            throw new UsernameExistsException("Username is already taken");
+        }
+
+        if (emailExists(userDTO.getEmail())){
+            throw new EmailExistsException("Email is already registered");
+        }
+
+        
         // take password and make sure it is encoded before putting on database
         // user passwordEncoder with encode method this will give us encoded password
-        String encodedPassword = passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
         Role userRole = roleRepository.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
 
         authorities.add(userRole);
         
-        return userRepository.save(new User(0, username, encodedPassword, email, authorities));
+        userRepository.save(new User(0, userDTO.getUsername(), encodedPassword, userDTO.getEmail(), authorities));
+    }
+
+    private boolean usernameExists(String username){
+        return userRepository.existsByUsername(username);
+    }
+
+    private boolean emailExists(String email){
+        return userRepository.existsByEmail(email);
     }
 
     // the authenticationManager will look for username and password and make sure they are valid

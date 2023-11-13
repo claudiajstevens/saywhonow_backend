@@ -15,6 +15,10 @@ public class LineupArtistDTO {
         this.stage = stage;
     }
 
+    public LineupArtistDTO(String linupArtist){
+        this.lineupArtist = linupArtist;
+    }
+
     public String getLineupArtist() {
         return lineupArtist;
     }

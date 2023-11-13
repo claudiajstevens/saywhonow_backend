@@ -8,6 +8,7 @@ import com.example.saywhonow_backend.domain.Festival;
 import com.example.saywhonow_backend.domain.Lineup;
 import com.example.saywhonow_backend.domain.LineupArtist;
 import com.example.saywhonow_backend.models.FestivalLineupDTO;
+import com.example.saywhonow_backend.models.LineupDTO;
 import com.example.saywhonow_backend.service.LineupService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,7 +52,7 @@ public class LineupController {
     }
 
     @GetMapping(path = "/upcoming-lineups")
-    public List<Lineup> getUpcomingLineups() {
+    public List<LineupDTO> getUpcomingLineups() {
         return lineupService.getUpcomingLineups();
     }
 

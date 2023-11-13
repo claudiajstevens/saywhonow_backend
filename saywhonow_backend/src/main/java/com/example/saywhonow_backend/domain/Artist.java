@@ -10,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -22,7 +23,7 @@ public class Artist {
 
     private String name;
 
-    @OneToMany(mappedBy = "artist", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "artist", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<LineupArtist> lineupArtists = new ArrayList<>();
     

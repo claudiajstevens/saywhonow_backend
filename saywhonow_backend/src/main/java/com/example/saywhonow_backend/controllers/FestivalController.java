@@ -1,9 +1,7 @@
 package com.example.saywhonow_backend.controllers;
 
 import java.util.List;
-import java.util.Optional;
 import java.io.IOException;
-import java.util.Date;
 
 import com.example.saywhonow_backend.domain.Festival;
 import com.example.saywhonow_backend.service.FestivalService;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +29,7 @@ public class FestivalController {
     public List<Festival> getFestivals(){
         return festivalService.getFestivals();
     }
+    
 
     @PostMapping("/add")
     public Festival registerNewFestival(String festivalName, String city, String state, String country, String monthHeld){

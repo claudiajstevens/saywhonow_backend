@@ -9,4 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 // this will take care of querying the database to check if user exists
 public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByUsername(String username);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
 }

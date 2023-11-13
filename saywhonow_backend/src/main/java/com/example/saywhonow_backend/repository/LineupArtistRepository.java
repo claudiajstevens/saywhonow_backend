@@ -16,5 +16,6 @@ public interface LineupArtistRepository extends JpaRepository<LineupArtist, Inte
 
     List<LineupArtist> findByDay(Date day);
 
+    
     List<LineupArtist> findByLineupId(Integer lineupId);
 }

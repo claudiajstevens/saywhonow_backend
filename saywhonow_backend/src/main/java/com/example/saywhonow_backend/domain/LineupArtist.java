@@ -13,12 +13,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class LineupArtist {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    // @JoinColumn(name = "artist_id")
+    // @ManyToMany(fetch = FetchType.LAZY)
+    // @JoinTable(name = "lineup_artist_artist",
+    //             joinColumns = @JoinColumn(name = "lineup_artist_id"),
+    //             inverseJoinColumns = @JoinColumn(name = "artist_id"))
+    // @JsonBackReference
+    // private List<Artist> artists = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id")

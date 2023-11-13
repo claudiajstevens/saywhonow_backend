@@ -98,25 +98,57 @@ public class LineupArtistService {
             System.out.println(lineupArtistDTO);
             LineupArtist lineupArtist = new LineupArtist();
             lineupArtist.setArtistName(lineupArtistDTO.getLineupArtist());
-            System.out.println(lineupArtistDTO.getDay());
-            System.out.println(lineupArtist.getDay());
-            lineupArtist.setDay(lineupArtistDTO.getDay());
-            lineupArtist.setStage(lineupArtistDTO.getStage());
+            // System.out.println(lineupArtistDTO.getDay());
+            // System.out.println(lineupArtist.getDay());
+            if( lineupArtistDTO.getDay() != null ){
+                lineupArtist.setDay(lineupArtistDTO.getDay());
+            }
+
+            if( lineupArtistDTO.getStage() != null ){
+                lineupArtist.setStage(lineupArtistDTO.getStage());
+            }
 
             lineupArtist.setLineup(lineup);
 
-            // Search for Artist to Connect to lineupArtist
-            String name = lineupArtistDTO.getLineupArtist();
-            Artist artist = artistRepository.findArtistByName(name);
 
-            // if artist does not exist add it to database
-            if (artist == null ){
-                Artist newArtist = new Artist(name);
-                artist = artistRepository.save(newArtist);
-            }
-            
-            // connect artist to lineup artist
-            lineupArtist.setArtist(artist);
+
+            // Search for Artist to Connect to lineupArtist
+            // String name = lineupArtistDTO.getLineupArtist();
+
+            // String cleanedArtistName = name.replaceAll("\\(DJ SET\\)", "")
+            //                         .replaceAll("\\(LIVE\\)", "")
+            //                         .replaceAll("Presents:.*", "")
+            //                         .trim();
+
+            // List<String> splitArtists = new ArrayList<>();
+
+            // System.out.println(cleanedArtistName);
+
+            // if( cleanedArtistName.contains("b2b") ){
+            //     String[] splitNames = cleanedArtistName.split("b2b");
+            //     for( String n : splitNames ) {
+            //         splitArtists.add(n.trim());
+            //     }
+
+            // }else{
+            //     splitArtists.add(cleanedArtistName);
+            // }
+
+            // for ( String artistName : splitArtists ){
+            //     System.out.println(artistName);
+            //     Artist artist = artistRepository.findArtistByName(artistName);
+
+            //     // if artist does not exist add it to database
+            //     if (artist == null && artistName != null ){
+            //         System.out.println("Artist not found");
+            //         Artist newArtist = new Artist(artistName);
+            //         artist = artistRepository.save(newArtist);
+            //     }
+                
+            //     // connect artist to lineup artist
+            //     lineupArtist.setArtist(artist);                
+            // }
+
 
             lineupArtists.add(lineupArtist);
         }
@@ -124,7 +156,9 @@ public class LineupArtistService {
         lineupArtistRepository.saveAll(lineupArtists);
     }
 
-    public List<LineupArtist> getLineupArtistInFestivalYear(Integer lineupId) {
-        return lineupArtistRepository.findByLineupId(lineupId);
+    public List<LineupArtist> getLineupArtistsInFestivalYear(Integer lineupId) {
+        Lineup lineup = lineupRepository.getReferenceById(lineupId);
+
+        return lineup.getArtists();
     }
 }

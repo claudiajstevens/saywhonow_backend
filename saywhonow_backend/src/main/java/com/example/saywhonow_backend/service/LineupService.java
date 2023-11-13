@@ -13,6 +13,7 @@ import javax.sound.sampled.Line;
 import com.example.saywhonow_backend.domain.Festival;
 import com.example.saywhonow_backend.domain.Lineup;
 import com.example.saywhonow_backend.models.FestivalLineupDTO;
+import com.example.saywhonow_backend.models.LineupDTO;
 import com.example.saywhonow_backend.repository.FestivalRepository;
 import com.example.saywhonow_backend.repository.LineupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +102,16 @@ public class LineupService {
         return lineupRepository.findByFestivalId(festivalId);
     }
 
-    public List<Lineup> getUpcomingLineups() {
-        return lineupRepository.findUpcomingLineups();
+    public List<LineupDTO> getUpcomingLineups() {
+        List<Lineup> lineups = lineupRepository.findUpcomingLineups();
+        List<LineupDTO> lineupDTOs = new ArrayList<>();
+
+        for (Lineup lineup : lineups) {
+            String festivalName = lineup.getFestival().getName();
+            LineupDTO lineupDTO = new LineupDTO(lineup.getId(), lineup.getStartDate(), lineup.getEndDate(), festivalName);
+            lineupDTOs.add(lineupDTO);
+        }
+
+        return lineupDTOs;
     }
 }

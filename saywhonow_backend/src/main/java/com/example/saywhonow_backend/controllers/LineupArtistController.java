@@ -34,9 +34,9 @@ public class LineupArtistController {
         return lineupArtistService.getLineupArtists();
     }
 
-    @GetMapping("/{linuepId}")
+    @GetMapping("/{lineupId}")
     public List<LineupArtist> getLineupArtistsInFestivalYear(@PathVariable("lineupId") Integer lineupId){
-        return lineupArtistService.getLineupArtistInFestivalYear(lineupId);
+        return lineupArtistService.getLineupArtistsInFestivalYear(lineupId);
     }
 
     @PostMapping("/add")
