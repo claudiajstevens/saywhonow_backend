@@ -8,13 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
-import com.example.saywhonow_backend.domain.Artist;
+// import com.example.saywhonow_backend.domain.Artist;
 import com.example.saywhonow_backend.domain.Lineup;
 import com.example.saywhonow_backend.domain.LineupArtist;
 import com.example.saywhonow_backend.models.LineupArtistDTO;
-import com.example.saywhonow_backend.repository.ArtistRepository;
+// import com.example.saywhonow_backend.repository.ArtistRepository;
 import com.example.saywhonow_backend.repository.LineupArtistRepository;
 import com.example.saywhonow_backend.repository.LineupRepository;
 import com.opencsv.bean.CsvToBean;
@@ -30,8 +29,8 @@ public class LineupArtistService {
     @Autowired
     private LineupArtistRepository lineupArtistRepository;
 
-    @Autowired
-    private ArtistRepository artistRepository;
+    // @Autowired
+    // private ArtistRepository artistRepository;
 
     @Autowired
     private LineupRepository lineupRepository;

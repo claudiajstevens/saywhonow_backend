@@ -1,15 +1,26 @@
 package com.example.saywhonow_backend.service;
 
+import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+// import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +32,7 @@ import com.example.saywhonow_backend.models.RegistrationDTO;
 import com.example.saywhonow_backend.models.Role;
 import com.example.saywhonow_backend.repository.RoleRepository;
 import com.example.saywhonow_backend.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 @Transactional
@@ -43,6 +55,16 @@ public class AuthenticationService {
 
     @Autowired
     private TokenService tokenService;
+
+    @Value("${app.jwt.refresh.secret}")
+    private String refreshTokenSecret;
+
+    @Value("${app.jwt.access.secret}")
+    private String accessTokenSecret;
+
+    // Define constants for token expiration times
+    private static final long ACCESS_TOKEN_EXPIRATION_SECONDS = 3600; // 1 hour
+    private static final long REFRESH_TOKEN_EXPIRATION_SECONDS = 2592000; // 30 days
 
     // TODO: create user dto to pass user info over instead of passing over authenticated password
     // or over password in User class put "@JSONIgnore"
@@ -80,7 +102,7 @@ public class AuthenticationService {
 
     // the authenticationManager will look for username and password and make sure they are valid
     // then generate authentication token and send over to token service 
-    public LoginResponseDTO loginUser(String username, String password){
+    public LoginResponseDTO loginUser(String username, String password, HttpServletResponse response){
         
         // when a request for login user is made, it is going to pass in username and password
         // then it be passed into authentication manager and it will use our userDetailsService
@@ -92,9 +114,17 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(username, password)
             );        
 
-            String token = tokenService.generateJwt(auth);
+            String accessToken = tokenService.generateJwt(auth, response);
+            String refreshToken = tokenService.generateRefreshToken(auth);
 
-            return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
+            // might want to add .secure(true) which will mark as secure for required https
+            // ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+            //     .httpOnly(true)
+            //     .sameSite("None")
+            //     .path("/")
+            //     .maxAge(java.time.Duration.ofDays(30))
+
+            return new LoginResponseDTO(userRepository.findByUsername(username).get(), accessToken, refreshToken);
 
         } catch(AuthenticationException e){
             // TODO: handle exception
@@ -102,9 +132,81 @@ public class AuthenticationService {
             throw new BadCredentialsException("Incorrect username or password", e);
         
             
-            //return new LoginResponseDTO(null, "");
         }
     
     }
+
+    public String refreshAccessToken(String refreshToken, HttpServletResponse response) {
+        try {
+            System.out.println(refreshToken);
+            Map<String, Object> refreshTokenClaims = tokenService.decodeJwt(refreshToken);
+        
+            // Validate the refresh token (you may check expiration, issuer, etc.)
+            // Example: Check if the issuer is valid
+            String issuer = (String) refreshTokenClaims.get("iss");
+            if( !"self".equals(issuer)){
+                throw new RuntimeException("Invalid refresh token issuer");
+            }
+
+            // Extract user information from the refresh token claims
+            String username = (String) refreshTokenClaims.get("sub");
+            System.out.println("Username: " + username);
+
+            User userDetails = userRepository.findByUsername(username)
+                .orElseThrow( () -> new UsernameNotFoundException("Invalid credentials or no username found"));
+
+            // Generate a new access token for the user
+            Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
+            return tokenService.generateJwt(auth, response);
+
+        } catch (JwtException e) {
+            throw new RuntimeException("Error refreshing access token");
+        }
+
+
+    }
+
+    // public ResponseEntity<String> refreshAccessToken(String refreshToken, ){
+    //     if( refreshToken == null || refreshToken.isEmpty() ) {
+    //         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No refresh token found");
+    //     }
+
+    //     // Validate and extract claims for the refresh token
+    //     Claims claims = Jwts.parser().setSigningKey(refreshTokenSecret).parseClaimsJws(refreshToken).getBody();
+
+    //     // Retrieve user information based on claims (You might want to customize this based on your User model)
+    //     String username = claims.get("username", String.class);
+    //     List<String> roles = claims.get("roles", List.class);
+
+    //     String newAccessToken = generateNewAccessToken(username, roles);
+    //     String newRefreshToken = generateNewRefreshToken(username);
+
+    //     Cookie cookie = new Cookie("jwt", newRefreshToken);
+    //     cookie.setHttpOnly(true);
+    //     cookie.setSecure(true);
+    //     cookie.setSameSize("None");
+    //     response.addCookie(cookie);
+
+    //     return ResponseEntity.ok(newAccessToken);
+
+    // }
+
+    // private String generateNewAccessToken(String username, List<String> roles) {
+    //     Instant now = Instant.now();
+        
+    //     return Jwts.builder()
+    //             .setSubject(username)
+    //             .claim("roles", roles)
+    //             .setIssuedAt(now)
+    //             .setExpiration(now.plusSeconds(REFRESH_TOKEN_EXPIRATION_SECONDS))
+    //             .signWith(SignatureAlgorithm.HS256, accessTokenSecret)
+    //             .conpact();
+
+    // }
+
+
 
 }

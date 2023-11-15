@@ -1,30 +1,28 @@
 package com.example.saywhonow_backend.controllers;
 
-import java.io.IOException;
+// import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import com.example.saywhonow_backend.domain.Festival;
 import com.example.saywhonow_backend.domain.Lineup;
-import com.example.saywhonow_backend.domain.LineupArtist;
 import com.example.saywhonow_backend.models.FestivalLineupDTO;
 import com.example.saywhonow_backend.models.LineupDTO;
 import com.example.saywhonow_backend.service.LineupService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+// import org.springframework.web.multipart.MultipartFile;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.RequestParam;
+// import com.example.saywhonow_backend.domain.LineupArtist;
 
 @RestController
 @RequestMapping("/lineup")
-@CrossOrigin("*")
 public class LineupController {
     private final LineupService lineupService;
 

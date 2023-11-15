@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import com.example.saywhonow_backend.domain.Festival;
 import com.example.saywhonow_backend.service.FestivalService;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/festivals")
-@CrossOrigin("*")
 public class FestivalController {
     private final FestivalService festivalService;
 
@@ -29,7 +27,7 @@ public class FestivalController {
     public List<Festival> getFestivals(){
         return festivalService.getFestivals();
     }
-    
+
 
     @PostMapping("/add")
     public Festival registerNewFestival(String festivalName, String city, String state, String country, String monthHeld){

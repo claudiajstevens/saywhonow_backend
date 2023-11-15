@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.example.saywhonow_backend.domain.Artist;
 import com.example.saywhonow_backend.service.ArtistService;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/artists")
-@CrossOrigin("*")
 public class ArtistController {
     private final ArtistService artistService;
 
@@ -54,4 +52,3 @@ public class ArtistController {
         artistService.deleteArtist(artistId);
     }
 }
-
