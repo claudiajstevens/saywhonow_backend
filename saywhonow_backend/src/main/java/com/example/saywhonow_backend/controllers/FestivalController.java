@@ -55,6 +55,12 @@ public class FestivalController {
         return festivalService.getFestivalById(festivalId);
     }
 
+    @GetMapping("search")
+    public List<Festival> searchFestivals(@RequestParam String q) {
+        System.out.println("Query is: " + q);
+        return festivalService.searchFestivals(q);
+    }
+
     @DeleteMapping(path = "{festivalId}")
     public void deleteFestival(@PathVariable("festivalId") Integer festivalId){
         festivalService.deleteFestival(festivalId);

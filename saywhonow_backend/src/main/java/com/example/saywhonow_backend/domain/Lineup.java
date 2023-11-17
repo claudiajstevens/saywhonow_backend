@@ -18,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 // import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
@@ -53,6 +54,11 @@ public class Lineup {
     @Column(name="end_date", columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private java.util.Date endDate;
+
+    @Nullable
+    @Lob
+    @Column(name = "lineup_poster")
+    private byte[] lineupPoster;
 
     @Nullable
     private boolean camping;
@@ -137,6 +143,14 @@ public class Lineup {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public byte[] getLineupPoster() {
+        return lineupPoster;
+    }
+
+    public void setLineupPoster(byte[] lineupPoster) {
+        this.lineupPoster = lineupPoster;
     }
 
     public boolean isCamping() {

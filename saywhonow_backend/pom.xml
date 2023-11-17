@@ -61,6 +61,18 @@
     		<version>5.5</version> <!-- Use the latest version -->
 		</dependency>
 
+		<!-- JJWT -->
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>9.31</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
 		<!-- <dependency>
 		<groupId>com.github.eirslett</groupId>

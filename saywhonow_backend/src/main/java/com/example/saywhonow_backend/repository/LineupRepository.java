@@ -19,4 +19,5 @@ public interface LineupRepository extends JpaRepository<Lineup, Integer> {
 
     @Query("SELECT l FROM Lineup l WHERE l.endDate >= CURRENT_DATE")
     List<Lineup> findUpcomingLineups();
+
 }

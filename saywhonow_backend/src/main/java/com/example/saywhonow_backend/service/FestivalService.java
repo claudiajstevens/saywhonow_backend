@@ -46,6 +46,10 @@ public class FestivalService {
         return festivalRepository.findAll();
     }
 
+    public List<Festival> searchFestivals(String query) {
+        return festivalRepository.findByNameStartingWithIgnoreCase(query);
+    }
+
     public Festival getFestivalById(Integer id){
         System.out.println("In the festivals service");
 

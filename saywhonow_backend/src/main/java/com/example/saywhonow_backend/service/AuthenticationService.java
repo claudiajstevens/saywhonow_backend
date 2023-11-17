@@ -56,11 +56,11 @@ public class AuthenticationService {
     @Autowired
     private TokenService tokenService;
 
-    @Value("${app.jwt.refresh.secret}")
-    private String refreshTokenSecret;
+    // @Value("${app.jwt.refresh.secret}")
+    // private String refreshTokenSecret;
 
-    @Value("${app.jwt.access.secret}")
-    private String accessTokenSecret;
+    // @Value("${app.jwt.access.secret}")
+    // private String accessTokenSecret;
 
     // Define constants for token expiration times
     private static final long ACCESS_TOKEN_EXPIRATION_SECONDS = 3600; // 1 hour
@@ -117,6 +117,7 @@ public class AuthenticationService {
             String accessToken = tokenService.generateJwt(auth, response);
             String refreshToken = tokenService.generateRefreshToken(auth);
 
+            response.addCookie(tokenService.createHttpOnlyCookie("refresh_token", refreshToken));
             // might want to add .secure(true) which will mark as secure for required https
             // ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
             //     .httpOnly(true)
@@ -124,7 +125,7 @@ public class AuthenticationService {
             //     .path("/")
             //     .maxAge(java.time.Duration.ofDays(30))
 
-            return new LoginResponseDTO(userRepository.findByUsername(username).get(), accessToken, refreshToken);
+            return new LoginResponseDTO(userRepository.findByUsername(username).get(), accessToken);
 
         } catch(AuthenticationException e){
             // TODO: handle exception
@@ -142,11 +143,12 @@ public class AuthenticationService {
             Map<String, Object> refreshTokenClaims = tokenService.decodeJwt(refreshToken);
         
             // Validate the refresh token (you may check expiration, issuer, etc.)
-            // Example: Check if the issuer is valid
-            String issuer = (String) refreshTokenClaims.get("iss");
-            if( !"self".equals(issuer)){
-                throw new RuntimeException("Invalid refresh token issuer");
-            }
+            // Example: check expiration date
+            // String issuer = (String) refreshTokenClaims.get("iss");
+            // if( !"self".equals(issuer)){
+            //     throw new RuntimeException("Invalid refresh token issuer");
+            // }
+            
 
             // Extract user information from the refresh token claims
             String username = (String) refreshTokenClaims.get("sub");
