@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
@@ -81,7 +82,14 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // TODO Auto-generated method stub
-        return this.authorities;
+        HashSet<GrantedAuthority> roles = new HashSet<GrantedAuthority>(authorities.size());
+        
+        roles.addAll(this.authorities);
+        
+        // for(String role : this.authorities.iterator<String>){
+        //     roles.add(new SimpleGrantedAuthority("ROLE_" + role));
+        // }
+        return roles;
     }
 
     @Override
@@ -156,9 +164,9 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public void setAuthorities(Set<Role> authorities) {
-        this.authorities = authorities;
-    }
+    // public void setAuthorities(Set<Role> authorities) {
+    //     this.authorities = authorities;
+    // }
 
 
     // public static Object withDefaultPasswordEncoder() {

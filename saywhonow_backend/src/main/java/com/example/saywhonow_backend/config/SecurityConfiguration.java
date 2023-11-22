@@ -108,6 +108,7 @@ public class SecurityConfiguration {
     public JwtEncoder jwtEncoder(){
         JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+        System.out.println("In JwtEncoder in Security Config, jwt set: " + jwks);
         return new NimbusJwtEncoder(jwks);
     }
 

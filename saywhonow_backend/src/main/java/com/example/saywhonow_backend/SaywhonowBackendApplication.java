@@ -36,6 +36,8 @@ public class SaywhonowBackendApplication {
 			roleRepository.save(new Role("USER"));
 
 			Set<Role> roles = new HashSet<>();
+
+			System.out.println("Admin role: " + roles);
 			roles.add(adminRole);
 			
 			User admin = new User(1, "admin", passwordEncode.encode("pass"), "email", roles);

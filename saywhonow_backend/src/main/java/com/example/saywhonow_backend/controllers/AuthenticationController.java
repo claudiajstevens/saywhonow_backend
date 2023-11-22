@@ -3,8 +3,10 @@ package com.example.saywhonow_backend.controllers;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import com.example.saywhonow_backend.models.LoginResponseDTO;
 import com.example.saywhonow_backend.models.RefreshRequestDTO;
 import com.example.saywhonow_backend.models.RegistrationDTO;
 import com.example.saywhonow_backend.service.AuthenticationService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -54,15 +57,25 @@ public class AuthenticationController {
     // }
 
     //@CookieValue(name = "jwt") 
-    @PostMapping("/refresh")
-    public ResponseEntity<String> refreshToken(@RequestBody String refreshToken, HttpServletResponse response){
+    @GetMapping("/refresh")
+    public ResponseEntity<RefreshRequestDTO> refreshToken(@CookieValue(name="refresh_token") String refreshToken, HttpServletResponse response){
+        System.out.println(response);
         System.out.println(refreshToken);
         
-        String newAccessToken = authenticationService.refreshAccessToken(refreshToken, response);
+        RefreshRequestDTO refreshDTO = authenticationService.refreshAccessToken(refreshToken, response);
         // LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
         // loginResponseDTO.setAccessToken(newAccessToken);
-        System.out.println("New access token: " + newAccessToken);
-        return ResponseEntity.ok(newAccessToken);
+        System.out.println("New access token: " + refreshDTO.getAccessToken());
+        return ResponseEntity.ok(refreshDTO);
+    }
+
+    @GetMapping("/signout")
+    public ResponseEntity<String> signout(HttpServletResponse response){
+        Cookie cookie = new Cookie("refresh_token", null);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return ResponseEntity.ok("User signed out and refresh token cookie removed");
     }
 
 }

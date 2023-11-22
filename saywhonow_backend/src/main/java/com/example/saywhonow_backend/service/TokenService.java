@@ -40,8 +40,10 @@ public class TokenService {
     private JwtDecoder jwtDecoder;
 
     // Define constants for token expiration times
-    private static final long ACCESS_TOKEN_EXPIRATION_SECONDS = 3600; // 1 hour
-    private static final long REFRESH_TOKEN_EXPIRATION_SECONDS = 2592000; // 30 days
+    private static final long ACCESS_TOKEN_EXPIRATION_SECONDS = 60;
+    //3600; // 1 hour
+    private static final long REFRESH_TOKEN_EXPIRATION_SECONDS = 120;
+    //2592000; // 30 days
 
     @Value("$jwt.secret")
     private String secret;

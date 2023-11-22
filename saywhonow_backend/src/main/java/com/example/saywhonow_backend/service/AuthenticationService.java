@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,7 @@ import com.example.saywhonow_backend.models.User;
 import com.example.saywhonow_backend.exceptions.EmailExistsException;
 import com.example.saywhonow_backend.exceptions.UsernameExistsException;
 import com.example.saywhonow_backend.models.LoginResponseDTO;
+import com.example.saywhonow_backend.models.RefreshRequestDTO;
 import com.example.saywhonow_backend.models.RegistrationDTO;
 import com.example.saywhonow_backend.models.Role;
 import com.example.saywhonow_backend.repository.RoleRepository;
@@ -137,7 +140,7 @@ public class AuthenticationService {
     
     }
 
-    public String refreshAccessToken(String refreshToken, HttpServletResponse response) {
+    public RefreshRequestDTO refreshAccessToken(String refreshToken, HttpServletResponse response) {
         try {
             System.out.println(refreshToken);
             Map<String, Object> refreshTokenClaims = tokenService.decodeJwt(refreshToken);
@@ -160,9 +163,19 @@ public class AuthenticationService {
             // Generate a new access token for the user
             Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            // List<Role> roles = userRepository.findRolesbyUserId(userDetails.getUserId());
 
-            return tokenService.generateJwt(auth, response);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            // String scope = auth.getAuthorities().stream()
+            // .map(GrantedAuthority::getAuthority)
+            // .collect(Collectors.joining(" "));
+
+            // System.out.println("In refresh access token, scope/roles: " + scope);
+
+            RefreshRequestDTO refreshRequestDTO = new RefreshRequestDTO(userDetails, tokenService.generateJwt(auth, response));
+
+            return refreshRequestDTO;
+
 
         } catch (JwtException e) {
             throw new RuntimeException("Error refreshing access token");
