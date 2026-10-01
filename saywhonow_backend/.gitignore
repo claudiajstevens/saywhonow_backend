@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+playwhonow.dump
+saywhonow_backend.jar
+.env
+*.jar
