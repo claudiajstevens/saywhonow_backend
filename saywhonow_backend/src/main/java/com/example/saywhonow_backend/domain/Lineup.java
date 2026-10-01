@@ -1,6 +1,7 @@
 package com.example.saywhonow_backend.domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 //import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +42,8 @@ public class Lineup {
     @JsonIgnore
     private Festival festival;
 
+    private Integer year;
+
     // @CsvBindByName(column = "artists")
     @OneToMany(mappedBy = "lineup", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -55,10 +58,14 @@ public class Lineup {
     @Temporal(TemporalType.DATE)
     private java.util.Date endDate;
 
+    // @Nullable
+    // @Lob
+    // @Column(name = "lineup_poster")
+    // private byte[] lineupPoster;
+
     @Nullable
-    @Lob
     @Column(name = "lineup_poster")
-    private byte[] lineupPoster;
+    private String lineupPoster;
 
     @Nullable
     private boolean camping;
@@ -121,6 +128,14 @@ public class Lineup {
         this.festival = festival;
     }
 
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
     public List<LineupArtist> getArtists() {
         return artists;
     }
@@ -135,6 +150,9 @@ public class Lineup {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        this.year = calendar.get(Calendar.YEAR);
     }
 
     public Date getEndDate() {
@@ -145,13 +163,21 @@ public class Lineup {
         this.endDate = endDate;
     }
 
-    public byte[] getLineupPoster() {
+    public String getLineupPoster() {
         return lineupPoster;
     }
 
-    public void setLineupPoster(byte[] lineupPoster) {
+    public void setLineupPoster(String lineupPoster) {
         this.lineupPoster = lineupPoster;
     }
+
+    // public byte[] getLineupPoster() {
+    //     return lineupPoster;
+    // }
+
+    // public void setLineupPoster(byte[] lineupPoster) {
+    //     this.lineupPoster = lineupPoster;
+    // }
 
     public boolean isCamping() {
         return camping;

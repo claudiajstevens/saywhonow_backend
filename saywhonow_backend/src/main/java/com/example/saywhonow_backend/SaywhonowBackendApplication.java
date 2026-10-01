@@ -33,12 +33,13 @@ public class SaywhonowBackendApplication {
 			if(roleRepository.findByAuthority("ADMIN").isPresent()) return;
 
 			Role adminRole = roleRepository.save(new Role("ADMIN"));
-			roleRepository.save(new Role("USER"));
+			Role userRole = roleRepository.save(new Role("USER"));
 
 			Set<Role> roles = new HashSet<>();
 
 			System.out.println("Admin role: " + roles);
 			roles.add(adminRole);
+			roles.add(userRole);
 			
 			User admin = new User(1, "admin", passwordEncode.encode("pass"), "email", roles);
 

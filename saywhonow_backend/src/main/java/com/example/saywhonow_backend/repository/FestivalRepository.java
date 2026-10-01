@@ -17,4 +17,8 @@ public interface FestivalRepository extends JpaRepository<Festival, Integer> {
 
     List<Festival> findByNameStartingWithIgnoreCase(String query);
 
+    Festival findByNameIgnoreCase(String name);
+
+    Integer findIdByNameIgnoreCase(String festivalName);
+
 }

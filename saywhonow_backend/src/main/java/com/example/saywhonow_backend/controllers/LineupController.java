@@ -61,10 +61,17 @@ public class LineupController {
         return lineupService.getUpcomingLineups();
     }
 
+    // @GetMapping(path = "{lineupId}/lineup-poster")
+    // public ResponseEntity<byte[]> getLineupImage(@PathVariable Integer lineupId){
+    //     Optional<byte[]> lineupPoster = lineupService.getlineupPoster(lineupId);
+    //     return lineupPoster.map(ResponseEntity::ok).orElseGet( () -> ResponseEntity.notFound().build());
+    // }
+
+    // retreiving the lineup poster image
     @GetMapping(path = "{lineupId}/lineup-poster")
-    public ResponseEntity<byte[]> getLineupImage(@PathVariable Integer lineupId){
-        Optional<byte[]> lineupPoster = lineupService.getlineupPoster(lineupId);
-        return lineupPoster.map(ResponseEntity::ok).orElseGet( () -> ResponseEntity.notFound().build());
+    public String getLineupImage(@PathVariable Integer lineupId){
+        System.out.println("In lineup controller");
+        return lineupService.getlineupPosterUrl(lineupId);
     }
 
     @PostMapping("/add")
@@ -88,8 +95,15 @@ public class LineupController {
         }
     }
 
+
+    // @PostMapping(path = "/{lineupId}/import-lineup-poster")
+    // public ResponseEntity<?> importLineupPoster(@PathVariable Integer lineupId, @RequestParam MultipartFile lineupPoster) throws IOException{
+    //     lineupService.saveLineupPoster(lineupId, lineupPoster);
+    //     return ResponseEntity.status(HttpStatus.OK).body("Lineup Poster uploaded successfully: ");
+    // }
+
     @PostMapping(path = "/{lineupId}/import-lineup-poster")
-    public ResponseEntity<?> importLineupPoster(@PathVariable Integer lineupId, @RequestParam MultipartFile lineupPoster) throws IOException{
+    public ResponseEntity<?> importLineupPoster(@PathVariable Integer lineupId, @RequestParam String lineupPoster) throws IOException{
         lineupService.saveLineupPoster(lineupId, lineupPoster);
         return ResponseEntity.status(HttpStatus.OK).body("Lineup Poster uploaded successfully: ");
     }

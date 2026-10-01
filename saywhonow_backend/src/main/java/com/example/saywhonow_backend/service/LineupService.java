@@ -123,31 +123,51 @@ public class LineupService {
     }
 
     // @Transactional
-    public void saveLineupPoster(Integer lineupId, MultipartFile lineupImage) throws IOException {
+    // public void saveLineupPoster(Integer lineupId, MultipartFile lineupImage) throws IOException {
+    //     // byte[] lineupPoster = convertImageToBytes(imagePath);
+    //     Lineup lineup = lineupRepository.findById(lineupId)
+    //         .orElseThrow( () -> new RuntimeException("Lineup not found to save lineup poster to"));
+
+    //     byte[] lineupPoster = lineupImage.getBytes();
+    //     System.out.println("Original Image Byte Size - " + lineupPoster.length);
+    //     lineupPoster = compressBytes(lineupPoster);
+    //     lineup.setLineupPoster(lineupPoster);
+    //     lineupRepository.save(lineup);
+    // }
+
+    public void saveLineupPoster(Integer lineupId, String lineupImageUrl) throws IOException {
         // byte[] lineupPoster = convertImageToBytes(imagePath);
         Lineup lineup = lineupRepository.findById(lineupId)
             .orElseThrow( () -> new RuntimeException("Lineup not found to save lineup poster to"));
 
-        byte[] lineupPoster = lineupImage.getBytes();
-        System.out.println("Original Image Byte Size - " + lineupPoster.length);
-        lineupPoster = compressBytes(lineupPoster);
-        lineup.setLineupPoster(lineupPoster);
+        lineup.setLineupPoster(lineupImageUrl);
         lineupRepository.save(lineup);
     }
 
-    public Optional<byte[]> getlineupPoster(Integer lineupId) {
+    // public Optional<byte[]> getlineupPoster(Integer lineupId) {
+    //     Lineup lineup = lineupRepository.findById(lineupId)
+    //         .orElseThrow( () -> new RuntimeException("Lineup not found to get lineup poster from"));
+        
+    //     // Optional<byte[]> lineupPoster = lineupRepository.findById(lineupId).map(Lineup::getLineupPoster); 
+    //     byte[] lineupPoster = lineup.getLineupPoster();
+
+    //     if( lineupPoster != null ) {
+    //         lineupPoster = decompressBytes(lineupPoster);
+    //         return Optional.of(lineupPoster);
+    //     } else {
+    //         return Optional.empty();
+    //     }
+    // }
+
+    public String getlineupPosterUrl(Integer lineupId) {
         Lineup lineup = lineupRepository.findById(lineupId)
             .orElseThrow( () -> new RuntimeException("Lineup not found to get lineup poster from"));
         
+        System.out.println("Found festival: " + lineup.getFestival().getName());
+        System.out.println("Lineup url: " + lineup.getLineupPoster());
         // Optional<byte[]> lineupPoster = lineupRepository.findById(lineupId).map(Lineup::getLineupPoster); 
-        byte[] lineupPoster = lineup.getLineupPoster();
+        return lineup.getLineupPoster();
 
-        if( lineupPoster != null ) {
-            lineupPoster = decompressBytes(lineupPoster);
-            return Optional.of(lineupPoster);
-        } else {
-            return Optional.empty();
-        }
     }
 
     // compress the image bytes before storing it in the database

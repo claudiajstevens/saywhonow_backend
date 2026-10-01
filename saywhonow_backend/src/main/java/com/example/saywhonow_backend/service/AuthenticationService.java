@@ -119,6 +119,7 @@ public class AuthenticationService {
 
             String accessToken = tokenService.generateJwt(auth, response);
             String refreshToken = tokenService.generateRefreshToken(auth);
+            System.out.println(refreshToken);
 
             response.addCookie(tokenService.createHttpOnlyCookie("refresh_token", refreshToken));
             // might want to add .secure(true) which will mark as secure for required https
