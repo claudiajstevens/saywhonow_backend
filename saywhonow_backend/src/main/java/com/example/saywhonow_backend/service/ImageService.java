@@ -128,7 +128,6 @@ public class ImageService {
 
         String uploadToDatabaseMessage = addUrlToDatabase(file.getOriginalFilename());
         System.out.println(uploadToDatabaseMessage);
-        sl
         return message;
     }
 
